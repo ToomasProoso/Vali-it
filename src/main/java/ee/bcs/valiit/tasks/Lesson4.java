@@ -55,12 +55,10 @@ public class Lesson4 {
                     accountBalanceMap.put(account, depositMoney + currentBalance);
                     System.out.println("Account: " + account + " balance is: " + accountBalanceMap.get(account));
                     System.out.println();
-                }else {
+                } else {
                     System.out.println("Enter a positive value.");
                 }
                 scanner.nextLine();
-
-
 
             } else if (line.equalsIgnoreCase("withdrawMoney")) {
                 // TODO 4
@@ -88,6 +86,41 @@ public class Lesson4 {
                 // This has to remove specified amount from fromAccount and add it to toAccount
                 // Your application needs to check that toAccount is positive
                 // And from account has enough money to do that transaction
+
+                System.out.println("To which account you want to transfer money to?: ");
+                String account = scanner.nextLine();
+
+                if (accountBalanceMap.get(account) == null) { //does account 1 exist?
+                    System.out.println("Can't transfer form " + account + ", account which doesn't exist.");
+                } else {
+                    System.out.println("Which account you want to transfer from?: ");
+                    String account2 = scanner.nextLine();
+
+                    if (accountBalanceMap.get(account2) == null) { // does account2 exist?
+                        System.out.println("Can't transfer to " + account2 + ", account which doesn't exist.");
+                    } else {
+                        System.out.println("Ok, so you want to transfer from " + account2 + " to " + account);
+                        System.out.println("Ok, how much?: ");
+                        Double transferMoney = scanner.nextDouble();
+
+                        if ((accountBalanceMap.get(account2) >= (accountBalanceMap.get(account)))) {
+                            //take accounts current balances
+                            Double account1Money = accountBalanceMap.get(account);
+                            Double account2Money = accountBalanceMap.get(account2);
+                            //update accounts balances
+                            Double dedeuctedMoney = account2Money - transferMoney;
+                            Double addedMoney = account1Money + transferMoney;
+                            // put new balances back to both accounts
+                            accountBalanceMap.put(account, addedMoney);
+                            accountBalanceMap.put(account2, dedeuctedMoney);
+                            System.out.println("Transferred from " + account2 + " to " + account + ", " + transferMoney + " success");
+                            System.out.println("New balance of " + account + " is " + accountBalanceMap.get(account));
+                            System.out.println("Remaining balance of " + account2 + " is " + accountBalanceMap.get(account2));
+                        } else {
+                            System.out.println("Oops, you don't have that much money.");
+                        }
+                    }
+                }
             }
 
 
@@ -112,7 +145,7 @@ public class Lesson4 {
             // Your application needs to check that toAccount is positive
             // And from account has enough money to do that transaction
             else {
-                System.out.println("Unknown command");
+                System.out.println("Unknown command try again ");
             }
         }
     }
