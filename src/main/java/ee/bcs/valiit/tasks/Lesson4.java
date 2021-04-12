@@ -26,6 +26,7 @@ public class Lesson4 {
                 // TODO 1
                 // Add command: "createAccount ${accountNr}"
                 // this has to store accountNr with 0 balance
+
                 System.out.println("Please enter account nr:");
                 String accountNr = scanner.nextLine();
                 System.out.println("Please enter initial balance");
@@ -36,6 +37,7 @@ public class Lesson4 {
                 // TODO 2
                 // Add command: "getBalance ${accountNr}"
                 // this has to display account balance of specific acount
+
                 System.out.println("Please enter account nr");
                 String accountNr = scanner.nextLine();
                 System.out.println("Account: " + accountNr + " balance is: " + accountBalanceMap.get(accountNr));
@@ -46,6 +48,7 @@ public class Lesson4 {
                 // Add command: "depositMoney ${accountNr} ${amount}
                 // this has to add specified amount of money to account
                 // You have to check that amount is positive number
+
                 System.out.println("To what account you want to deposit to?: ");
                 String account = scanner.nextLine();
                 System.out.println("Ok, so you want to add money to account: " + account + ". How much?: ");
@@ -66,6 +69,7 @@ public class Lesson4 {
                 // This has to remove specified amount of money from account
                 // You have to check that amount is positive number
                 // You may not allow this transaction if account balance would become negative
+
                 System.out.println("which account you want to withdraw ?: ");
                 String account = scanner.nextLine();
                 System.out.println("Ok, so you want to withdraw from account: " + account + ". How much?: ");
@@ -89,43 +93,34 @@ public class Lesson4 {
 
                 System.out.println("To which account you want to transfer money to?: ");
                 String account = scanner.nextLine();
-                //null = does not exist
-                if (accountBalanceMap.get(account) == null) { //does account 1 exist?
-                    System.out.println("Can't transfer form " + account + ", account which doesn't exist.");
+                System.out.println("Which account you want to transfer from?: ");
+                String account2 = scanner.nextLine();
+                System.out.println("Ok, so you want to transfer from " + account2 + " to " + account);
+                System.out.println("Ok, how much?: ");
+                Double transferMoney = scanner.nextDouble();
+                if ((accountBalanceMap.get(account2) >= (accountBalanceMap.get(account)))) {
+                    //take accounts current balances
+                    Double account1Money = accountBalanceMap.get(account);
+                    Double account2Money = accountBalanceMap.get(account2);
+                    //update accounts balances
+                    Double dedeuctedMoney = account2Money - transferMoney;
+                    Double addedMoney = account1Money + transferMoney;
+                    // put new balances back to both accounts
+                    accountBalanceMap.put(account, addedMoney);
+                    accountBalanceMap.put(account2, dedeuctedMoney);
+                    System.out.println("Transferred from " + account2 + " to " + account + ", " + transferMoney + " success");
+                    System.out.println("New balance of " + account + " is " + accountBalanceMap.get(account));
+                    System.out.println("Remaining balance of " + account2 + " is " + accountBalanceMap.get(account2));
                 } else {
-                    System.out.println("Which account you want to transfer from?: ");
-                    String account2 = scanner.nextLine();
-
-                    if (accountBalanceMap.get(account2) == null) { // does account2 exist?
-                        System.out.println("Can't transfer to " + account2 + ", account which doesn't exist.");
-                    } else {
-                        System.out.println("Ok, so you want to transfer from " + account2 + " to " + account);
-                        System.out.println("Ok, how much?: ");
-                        Double transferMoney = scanner.nextDouble();
-
-                        if ((accountBalanceMap.get(account2) >= (accountBalanceMap.get(account)))) {
-                            //take accounts current balances
-                            Double account1Money = accountBalanceMap.get(account);
-                            Double account2Money = accountBalanceMap.get(account2);
-                            //update accounts balances
-                            Double dedeuctedMoney = account2Money - transferMoney;
-                            Double addedMoney = account1Money + transferMoney;
-                            // put new balances back to both accounts
-                            accountBalanceMap.put(account, addedMoney);
-                            accountBalanceMap.put(account2, dedeuctedMoney);
-                            System.out.println("Transferred from " + account2 + " to " + account + ", " + transferMoney + " success");
-                            System.out.println("New balance of " + account + " is " + accountBalanceMap.get(account));
-                            System.out.println("Remaining balance of " + account2 + " is " + accountBalanceMap.get(account2));
-                        } else {
-                            System.out.println("Oops, you don't have that much money.");
-                        }
-                        scanner.nextLine();
-                    }
+                    System.out.println("Oops, you don't have that much money.");
                 }
+                scanner.nextLine();
             }
         }
     }
 }
+
+
 // TODO 1
 // Add command: "createAccount ${accountNr}"
 // this has to store accountNr with 0 balance
