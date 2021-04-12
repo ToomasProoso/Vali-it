@@ -89,7 +89,7 @@ public class Lesson4 {
 
                 System.out.println("To which account you want to transfer money to?: ");
                 String account = scanner.nextLine();
-
+                //null = does not exist
                 if (accountBalanceMap.get(account) == null) { //does account 1 exist?
                     System.out.println("Can't transfer form " + account + ", account which doesn't exist.");
                 } else {
@@ -119,34 +119,30 @@ public class Lesson4 {
                         } else {
                             System.out.println("Oops, you don't have that much money.");
                         }
+                        scanner.nextLine();
                     }
                 }
-            }
-
-
-            // TODO 1
-            // Add command: "createAccount ${accountNr}"
-            // this has to store accountNr with 0 balance
-            // TODO 2
-            // Add command: "getBalance ${accountNr}"
-            // this has to display account balance of specific acount
-            // TODO 3
-            // Add command: "depositMoney ${accountNr} ${amount}
-            // this has to add specified amount of money to account
-            // You have to check that amount is positive number
-            // TODO 4
-            // Add command: "withdrawMoney ${accountNr} ${amount}
-            // This has to remove specified amount of money from account
-            // You have to check that amount is positive number
-            // You may not allow this transaction if account balance would become negative
-            // TODO 5
-            // Add command: "transfer ${fromAccount} ${toAccount} ${amount}
-            // This has to remove specified amount from fromAccount and add it to toAccount
-            // Your application needs to check that toAccount is positive
-            // And from account has enough money to do that transaction
-            else {
-                System.out.println("Unknown command try again ");
             }
         }
     }
 }
+// TODO 1
+// Add command: "createAccount ${accountNr}"
+// this has to store accountNr with 0 balance
+// TODO 2
+// Add command: "getBalance ${accountNr}"
+// this has to display account balance of specific acount
+// TODO 3
+// Add command: "depositMoney ${accountNr} ${amount}
+// this has to add specified amount of money to account
+// You have to check that amount is positive number
+// TODO 4
+// Add command: "withdrawMoney ${accountNr} ${amount}
+// This has to remove specified amount of money from account
+// You have to check that amount is positive number
+// You may not allow this transaction if account balance would become negative
+// TODO 5
+// Add command: "transfer ${fromAccount} ${toAccount} ${amount}
+// This has to remove specified amount from fromAccount and add it to toAccount
+// Your application needs to check that toAccount is positive
+// And from account has enough money to do that transaction
