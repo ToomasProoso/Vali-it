@@ -38,15 +38,16 @@ public class Lesson4 {
                 System.out.println("Please enter account nr");
                 String accountNr = scanner.nextLine();
                 System.out.println("Account balance is: " + accountBalanceMap.get(accountNr));
+                System.out.println();
 
             } else if (line.equalsIgnoreCase("depositMoney")) {
-
-
-                System.out.println();
                 // TODO 3
                 // Add command: "depositMoney ${accountNr} ${amount}
                 // this has to add specified amount of money to account
                 // You have to check that amount is positive number
+                System.out.println("To what account you want to deposit to?: ");
+                String account = scanner.nextLine();
+
 
 
             } else if (line.equalsIgnoreCase("withdrawMoney")) {
