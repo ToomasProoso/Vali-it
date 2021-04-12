@@ -8,16 +8,17 @@ public class Lesson4 {
     // Store account nr as a key and account balance as value
     private static Map<String, Double> accountBalanceMap = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
-//
+
+    //
     public static void main(String[] args) {
 
         while (true) {
-            System.out.println("insert command:\n"+
-                    "1. To create account insert : createAccount \n"+
+            System.out.println("insert command:\n" +
+                    "1. To create account insert : createAccount \n" +
                     "2. Get balance insert : getBalance \n" +
                     "3. Deposit money : depositMoney \n" +
                     "4. Withdraw money: withdrawMoney\n" +
-                    "5. Transfer money : transfer \n" );
+                    "5. Transfer money : transfer \n");
             String line = scanner.nextLine();
             if (line.equalsIgnoreCase("exit")) {
                 break;
@@ -37,7 +38,7 @@ public class Lesson4 {
                 // this has to display account balance of specific acount
                 System.out.println("Please enter account nr");
                 String accountNr = scanner.nextLine();
-                System.out.println("Account balance is: " + accountBalanceMap.get(accountNr));
+                System.out.println("Account: " + accountNr + " balance is: " + accountBalanceMap.get(accountNr));
                 System.out.println();
 
             } else if (line.equalsIgnoreCase("depositMoney")) {
@@ -47,6 +48,16 @@ public class Lesson4 {
                 // You have to check that amount is positive number
                 System.out.println("To what account you want to deposit to?: ");
                 String account = scanner.nextLine();
+                System.out.println("Ok, so you want to add money to account: " + account + ". How much?: ");
+                Double depositMoney = scanner.nextDouble();
+                if (depositMoney > 0) {
+                    Double currentBalance = accountBalanceMap.get(account);
+                    accountBalanceMap.put(account, depositMoney + currentBalance);
+                    System.out.println("Account: " + account + " balance is: " + accountBalanceMap.get(account));
+                }else {
+                    System.out.println("Enter a positive value.");
+                }
+                scanner.nextLine();
 
 
 
@@ -56,6 +67,17 @@ public class Lesson4 {
                 // This has to remove specified amount of money from account
                 // You have to check that amount is positive number
                 // You may not allow this transaction if account balance would become negative
+                System.out.println("which account you want to withdraw ?: ");
+                String account = scanner.nextLine();
+                System.out.println("Ok, so you want to withdraw from account: " + account + ". How much?: ");
+                Double withdrawMoney = scanner.nextDouble();
+                if (withdrawMoney > 0) {
+                    Double currentBalance = accountBalanceMap.get(account);
+                    accountBalanceMap.put(account, currentBalance - withdrawMoney);
+                } else {
+                    System.out.println("Enter a positive value.");
+                }
+                scanner.nextLine();
             } else if (line.equalsIgnoreCase("transfer")) {
                 // TODO 5
                 // Add command: "transfer ${fromAccount} ${toAccount} ${amount}
