@@ -54,6 +54,7 @@ public class Lesson4 {
                     Double currentBalance = accountBalanceMap.get(account);
                     accountBalanceMap.put(account, depositMoney + currentBalance);
                     System.out.println("Account: " + account + " balance is: " + accountBalanceMap.get(account));
+                    System.out.println();
                 }else {
                     System.out.println("Enter a positive value.");
                 }
@@ -71,11 +72,14 @@ public class Lesson4 {
                 String account = scanner.nextLine();
                 System.out.println("Ok, so you want to withdraw from account: " + account + ". How much?: ");
                 Double withdrawMoney = scanner.nextDouble();
-                if (withdrawMoney > 0) {
+                if (withdrawMoney <= accountBalanceMap.get(account)) {
                     Double currentBalance = accountBalanceMap.get(account);
                     accountBalanceMap.put(account, currentBalance - withdrawMoney);
+                    System.out.println("Account: " + account + " balance is: " + accountBalanceMap.get(account));
+                    System.out.println();
                 } else {
-                    System.out.println("Enter a positive value.");
+                    System.out.println("You can't withdraw that much. You have: " + accountBalanceMap.get(account));
+                    System.out.println();
                 }
                 scanner.nextLine();
             } else if (line.equalsIgnoreCase("transfer")) {
