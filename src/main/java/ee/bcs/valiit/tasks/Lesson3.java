@@ -7,6 +7,9 @@ public class Lesson3 {
     // x = 5
     // return 5*4*3*2*1 = 120
     public static int factorial(int x) {
+            int sum = 1;
+
+
         return 0;
     }
 
