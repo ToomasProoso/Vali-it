@@ -14,12 +14,12 @@ public class LoopSample {
             if(x == 4){
                 break;
             }
-            System.out.println("while väärtus: " + array[x] + " index: " + x);
+            //System.out.println("while väärtus: " + array[x] + " index: " + x);
             x++;
         }
 
         for (int i = 0; i < array.length; i++) {
-            if(i%2 == 0){
+            if(i % 2 == 0){
                 continue;
             }
             System.out.println("for väärtus: " + array[i] + " index: " + i);
@@ -27,6 +27,7 @@ public class LoopSample {
 
         for (int value : array) {
             System.out.println("for each väärtus: " + value);
+
         }
     }
 }

@@ -5,7 +5,7 @@ public class Test1Sample {
         String a = "Hello World";
         System.out.println(a.length());
         System.out.println(a.charAt(6));
-        System.out.println(a.substring(0,5));
+        System.out.println(a.substring(0,5)+"sub");
         String b = "Hello World";
         if(a.equals(b)){
             System.out.println("Õige");

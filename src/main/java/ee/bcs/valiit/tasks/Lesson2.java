@@ -3,6 +3,9 @@ package ee.bcs.valiit.tasks;
 public class Lesson2 {
 
     public static void main(String[] args) {
+
+        System.out.println(fibonacci(20));
+        multiplyTable(5,5);
         // TODO siia saab kirjutada koodi testimiseks
     }
 
@@ -32,7 +35,11 @@ public class Lesson2 {
 
     // TODO, leia massiivi kõigi elementide summa
     public static int sum(int[] x){
-        return 0;
+        int sum = 0;
+        for (int i : x) {
+            sum += i;
+        }
+        return sum;
     }
 
     // TODO trüki välja korrutustabel mis on x ühikut lai ja y ühikut kõrge
@@ -49,6 +56,12 @@ public class Lesson2 {
     // TODO 5 võrdle ridu. Kas on mingi seaduspärasus ridade vahel,
     // mis on ja mis võiks olla. Äkki tuleb mõni idee
     public static void multiplyTable(int x, int y) {
+        for (int i = 1; i <= y; i++) {
+            for (int j = 1; j <= x; j++) {
+                System.out.println(i*j +" ");
+            }
+            System.out.println();
+        }
 
     }
 
@@ -57,8 +70,17 @@ public class Lesson2 {
     // 0, 1, 1, 2, 3, 5, 8, 13, 21
     // Tagasta fibonacci jada n element. Võid eeldada, et n >= 0
     public static int fibonacci(int n) {
+        int a = 0;
+        int b = 1;
+        int c = 0;
+        for (int i = 1; i<= n; i++) {
+            a=b;
+            b=c;
+            c=a+b;
+            System.out.println("number: " + i + "on fib = " + c);
+        }
 
-        return 0;
+        return c;
     }
 
     // TODO

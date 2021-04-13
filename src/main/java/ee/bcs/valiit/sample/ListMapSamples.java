@@ -38,10 +38,7 @@ public class ListMapSamples {
         Character teineTaht = text.charAt(1);
         Character kolmasTaht = text.charAt(2);
 
-        Map<Character, String> map = new HashMap<>();
-        map.put('s', "...");
-        map.put('o', "---");
-        System.out.println(map.get(esimeneTaht) + " " + map.get(teineTaht) + " " + map.get(kolmasTaht));
+
 
         String a = text.substring(0,1);
         String b = text.substring(1,2);
