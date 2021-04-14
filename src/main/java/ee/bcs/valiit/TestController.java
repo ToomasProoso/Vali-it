@@ -4,13 +4,16 @@ import ee.bcs.valiit.solution.SolutionLesson1;
 import ee.bcs.valiit.tasks.Lesson2;
 import ee.bcs.valiit.tasks.Lesson2b;
 import ee.bcs.valiit.tasks.MyLessons.Cars;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import ee.bcs.valiit.tasks.MyLessons.Cars1;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class TestController {
+    public List<Cars> carsList = new ArrayList<>();
+
     //http://localhost:8080/sample/hello-world/John/?action=Hey&action2=tere
     @GetMapping("sample/hello-world/{nameInUrl}") // selle järgi tuleb minna -> http://localhost:8080/sample/hello-world
     public String helloWorld(@PathVariable("nameInUrl") String name, @RequestParam("action") String a,
@@ -60,13 +63,31 @@ public class TestController {
 
 //localhost:8080/cars
     @GetMapping("Cars")
-    public Cars cars(){
-        Cars cars = new Cars();
-        cars.setName("subaru");
-        cars.setMark("forester");
-        cars.setYear(2018);
-        return cars;
+    public List<Cars> cars(){
+        return carsList;
     }
+    @GetMapping("Cars/{id}")
+    public Cars getCarId(@PathVariable("id") int identify) {
+        return (carsList.get(identify));
+
+    }
+    @PostMapping ("Cars")
+    public void cars(@RequestBody Cars cars){
+       carsList.add(cars);
+    }
+    @PutMapping("Cars/{id}")
+    public void replaceCars(@PathVariable ("id") int identify,@RequestBody Cars cars){
+        carsList.set(identify,cars);
+    }
+    @DeleteMapping("Cars/{id}")
+    public void deleteCars (@PathVariable("id") int identify){
+        carsList.remove(identify);
+    }
+
+//@GetMapping("Cars1")
+//    public List <Cars1>(){
+
+}
 
 //
 //    public String mark;
@@ -77,5 +98,19 @@ public class TestController {
 //    @GetMapping("multiplyTable/{x}/{y}")
 //    public int multiplyTable(@PathVariable("i") int i, @PathVariable("j") int j) {
 //        return Lesson2.multiplyTable(i, j);
-}
 
+
+//    //localhost:8080/cars
+//    @GetMapping("Cars")
+//    public Cars cars(){
+//        Cars cars = new Cars();
+//        cars.setName("Subaru");
+//        cars.setMark("Forester");
+//        cars.setYear(2018);
+//        return cars;
+//    }
+//    @PostMapping ("Cars")
+//    public Cars cars(@RequestBody Cars cars){
+//        System.out.println(cars.getMark());
+//        return cars;
+//    }
