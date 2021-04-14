@@ -2,6 +2,9 @@ package ee.bcs.valiit.tasks;
 
 import java.util.Random;
 public class Lesson3Hard {
+//    public static void main(String[] args) {
+//
+//    }
     // TODO kirjuta mäng mis leiab suvalise numbri 0-99, mille kasutaja peab ära arvama
     // iga kord pärast kasutaja sisestatud täis arvu peab programm ütlema kas number oli suurem või väiksem
     // ja kasutaja peab saama uuesti arvata

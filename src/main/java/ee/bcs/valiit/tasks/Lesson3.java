@@ -1,40 +1,94 @@
 package ee.bcs.valiit.tasks;
 
+import java.util.Arrays;
+
 public class Lesson3 {
+    public static void main(String[] args) {
+
+        int[] a = new int[]{1, 2, 3, 4};
+         System.out.println(Arrays.toString(a));
+        System.out.println(reverseString("Hello World"));
+        //System.out.println(isPrime());
+         System.out.println(Arrays.toString(sort(a)));
+        System.out.println(evenFibonacci(10));
+       // System.out.println(morseCode("sos"));
+    }
 
     // TODO tagasta x faktoriaal.
     // Näiteks
     // x = 5
     // return 5*4*3*2*1 = 120
     public static int factorial(int x) {
-            int sum = 1;
-
-
-        return 0;
+        int sum = 1;
+        for (int i = 1; i <= x; i++) {
+            sum *= i;
+        }
+        return sum;
     }
 
     // TODO tagasta string tagurpidi
     public static String reverseString(String a) {
-        return "";
+        String resultString = "";
+        for (int i = a.length() - 1; i <= 0; i++) {
+            resultString += a.charAt(i);
+        }
+        return resultString;
     }
 
     // TODO tagasta kas sisestatud arv on primaar arv (jagub ainult 1 ja iseendaga)
-    public static boolean isPrime(int x){
-        return false;
+    public static boolean isPrime(int x) {
+        if (x == 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(x); i++) {
+            if (x % i == 0) {
+                return false;
+            }
+        }
+        return true;
+        // x % 1 == 0
+        // x % 2 == 0???
+        // x % 3 == 0???
+        // ...
+        // x % i == 0???
+        // x % x == 0
     }
 
     // TODO sorteeri massiiv suuruse järgi.
     // TODO kasuta tsükleid, ära kasuta ühtegi olemasolevat sort funktsiooni
     public static int[] sort(int[] a) {
-        return new int[0];
+        // 2 9 1 7
+        // 2 1 7 9
+        // 1 2 7 9
+        for (int j = 1; j < a.length; j++) {
+            for (int i = 1; i < a.length; i++) {
+                if (a[i - 1] > a[i]) {
+                    int tmp = a[i];
+                    a[i] = a[i - 1];
+                    a[i - 1] = tmp;
+                }
+            }
+        }
+        return a;
     }
 
-    public static int evenFibonacci(int x){
+    public static int evenFibonacci(int x) {
         // TODO liida kokku kõik paaris fibonacci arvud kuni numbrini x
-        return 0;
+        int a = 0;
+        int b = 1;
+        int sum = 0;
+        while (b <= x) {
+            int c = a;
+            a = b;
+            b = c + b;
+            if (a % 2 == 0) {
+                sum += a;
+            }
+        }
+        return sum;
     }
 
-    public static String morseCode(String text){
+    public static String morseCode(String text) {
         // TODO kirjuta programm, mis tagastab sisestatud teksti morse koodis (https://en.wikipedia.org/wiki/Morse_code)
         // Kasuta sümboleid . ja - ning eralda kõik tähed tühikuga
         return "";

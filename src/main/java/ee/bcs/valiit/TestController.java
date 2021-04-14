@@ -48,6 +48,8 @@ public class TestController {
     public int sum(@PathVariable("array") int[] array) {
         return Lesson2.sum(array);
     }
+
+
     // http://localhost:8080/generateArray/5
     @GetMapping("generateArray/{n}") //public int [] generateArray annad ühe numbri
     public int [] generateArray(@PathVariable("n") int n) {
