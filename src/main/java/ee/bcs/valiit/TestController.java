@@ -3,6 +3,7 @@ package ee.bcs.valiit;
 import ee.bcs.valiit.solution.SolutionLesson1;
 import ee.bcs.valiit.tasks.Lesson2;
 import ee.bcs.valiit.tasks.Lesson2b;
+import ee.bcs.valiit.tasks.MyLessons.Cars;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,9 +53,26 @@ public class TestController {
 
     // http://localhost:8080/generateArray/5
     @GetMapping("generateArray/{n}") //public int [] generateArray annad ühe numbri
-    public int [] generateArray(@PathVariable("n") int n) {
+    public int[] generateArray(@PathVariable("n") int n) {
         return Lesson2b.generateArray(n);
     }
+
+
+//localhost:8080/cars
+    @GetMapping("Cars")
+    public Cars cars(){
+        Cars cars = new Cars();
+        cars.setName("subaru");
+        cars.setMark("forester");
+        cars.setYear(2018);
+        return cars;
+    }
+
+//
+//    public String mark;
+//    private String number;
+//    private int year;
+
 
 //    @GetMapping("multiplyTable/{x}/{y}")
 //    public int multiplyTable(@PathVariable("i") int i, @PathVariable("j") int j) {
