@@ -14,8 +14,8 @@ import java.util.List;
 public class TestController {
     public List<Cars> carsList = new ArrayList<>();
 
-    //http://localhost:8080/sample/hello-world/John/?action=Hey&action2=tere
-    @GetMapping("sample/hello-world/{nameInUrl}") // selle järgi tuleb minna -> http://localhost:8080/sample/hello-world
+    //http://localhost:8080/sample1/hello-world/John/?action=Hey&action2=tere
+    @GetMapping("sample1/hello-world/{nameInUrl}") // selle järgi tuleb minna -> http://localhost:8080/sample/hello-world
     public String helloWorld(@PathVariable("nameInUrl") String name, @RequestParam("action") String a,
                              @RequestParam("action2") String b) {
         return a + " " + name + " " + b;
