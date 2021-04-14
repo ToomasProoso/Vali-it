@@ -15,7 +15,8 @@ public class TestController {
     public List<Cars> carsList = new ArrayList<>();
 
     //http://localhost:8080/sample1/hello-world/John/?action=Hey&action2=tere
-    @GetMapping("sample1/hello-world/{nameInUrl}") // selle järgi tuleb minna -> http://localhost:8080/sample/hello-world
+    @GetMapping("sample1/hello-world/{nameInUrl}")
+    // selle järgi tuleb minna -> http://localhost:8080/sample/hello-world
     public String helloWorld(@PathVariable("nameInUrl") String name, @RequestParam("action") String a,
                              @RequestParam("action2") String b) {
         return a + " " + name + " " + b;
@@ -61,26 +62,32 @@ public class TestController {
     }
 
 
-//localhost:8080/cars
+
+
+
+    //localhost:8080/cars
     @GetMapping("Cars")
-    public List<Cars> cars(){
+    public List<Cars> cars() {
         return carsList;
     }
+
     @GetMapping("Cars/{id}")
     public Cars getCarId(@PathVariable("id") int identify) {
         return (carsList.get(identify));
+    }
 
+    @PostMapping("Cars")
+    public void cars(@RequestBody Cars cars) {
+        carsList.add(cars);
     }
-    @PostMapping ("Cars")
-    public void cars(@RequestBody Cars cars){
-       carsList.add(cars);
-    }
+
     @PutMapping("Cars/{id}")
-    public void replaceCars(@PathVariable ("id") int identify,@RequestBody Cars cars){
-        carsList.set(identify,cars);
+    public void replaceCars(@PathVariable("id") int identify, @RequestBody Cars cars) {
+        carsList.set(identify, cars);
     }
+
     @DeleteMapping("Cars/{id}")
-    public void deleteCars (@PathVariable("id") int identify){
+    public void deleteCars(@PathVariable("id") int identify) {
         carsList.remove(identify);
     }
 
