@@ -25,14 +25,14 @@ public class Lesson4aController {
         accountBalanceMap.put(request.getAccountNumber(), request.getAmount());
     }
 
-    // http://localhost:8080/bank/1/account/EE123
-    @GetMapping("bank/1/account/{accountNumber}")
+    // http://localhost:8080/bank/account/EE123
+    @GetMapping("bank/account/{accountNumber}")
     public String getBalance(@PathVariable("accountNumber") String accountNr) {
         return "Account balance is: " + accountBalanceMap.get(accountNr);
 
     }
-    //localhost:8080/bank/2/account/EE123/500
-    @PutMapping("bank/2/account/{accountNumber}/{deposit}")
+    //localhost:8080/bank/account/EE123/500
+    @PutMapping("bank/account/{accountNumber}/{deposit}")
     public String depositMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("deposit") double amount) {
         if (amount > 0) {
             Double currentBalance = accountBalanceMap.get(accountNr) + amount;
@@ -43,8 +43,8 @@ public class Lesson4aController {
 
 
     }
-    //localhost:8080/bank/3/account/EE123/500
-    @PutMapping("bank/3/account/{accountNumber}/{withdraw}")
+    //localhost:8080/bank/account/EE123/500
+    @PutMapping("bank/account/{accountNumber}/{withdraw}")
     public String withdrawMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("withdraw") double amount) {
         if (amount <= accountBalanceMap.get(accountNr)) {
             Double currentBalance = accountBalanceMap.get(accountNr) - amount;
