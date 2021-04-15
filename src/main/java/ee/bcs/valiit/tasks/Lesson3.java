@@ -1,6 +1,8 @@
 package ee.bcs.valiit.tasks;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Lesson3 {
     public static void main(String[] args) {
@@ -11,7 +13,7 @@ public class Lesson3 {
         //System.out.println(isPrime());
          System.out.println(Arrays.toString(sort(a)));
         System.out.println(evenFibonacci(10));
-       // System.out.println(morseCode("sos"));
+       System.out.println(morseCode("sos"));
     }
 
     // TODO tagasta x faktoriaal.
@@ -89,8 +91,25 @@ public class Lesson3 {
     }
 
     public static String morseCode(String text) {
+        Map<Character, String> morseMap = new HashMap<>();
+        morseMap.put('h', "....");
+        morseMap.put('e', ".");
+        morseMap.put('l', ".-..");
+        morseMap.put('o', "---");
+        morseMap.put('s', "...");
+        //for(int i = 0; i < text.length(); i++){
+        //    char c = text.charAt(i);
+        //}
+        String resultString = "";
+
+        for (char c : text.toCharArray()) {
+            if (!resultString.isEmpty()) {
+                resultString += " ";
+            }
+            resultString += morseMap.get(c);
+        }
         // TODO kirjuta programm, mis tagastab sisestatud teksti morse koodis (https://en.wikipedia.org/wiki/Morse_code)
         // Kasuta sümboleid . ja - ning eralda kõik tähed tühikuga
-        return "";
+        return resultString;
     }
 }

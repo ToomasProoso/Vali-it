@@ -1,10 +1,9 @@
-package ee.bcs.valiit;
+package ee.bcs.valiit.tasks.MyLessons;
 
 import ee.bcs.valiit.solution.SolutionLesson1;
 import ee.bcs.valiit.tasks.Lesson2;
 import ee.bcs.valiit.tasks.Lesson2b;
-import ee.bcs.valiit.tasks.MyLessons.Cars;
-import ee.bcs.valiit.tasks.MyLessons.Cars1;
+import ee.bcs.valiit.tasks.Lesson3;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -61,7 +60,10 @@ public class TestController {
         return Lesson2b.generateArray(n);
     }
 
-
+    @GetMapping("Lesson3/morseCode/{text}")
+    public String morse(@PathVariable("text")String text) {
+        return (Lesson3.morseCode(text));
+    }
 
 
 
