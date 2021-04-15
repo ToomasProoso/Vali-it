@@ -14,10 +14,10 @@ public class Lesson4aController {
     }
 
     // http://localhost:8080/bank/createAccount?accountNr=EE123&balance=1245
-    @GetMapping("bank/createAccount")
-    public void createAccount(@RequestParam("accountNr") String accountNr, @RequestParam("balance") Double balance) {
-        accountBalanceMap.put(accountNr, balance);
-    }
+//    @GetMapping("bank/createAccount")
+//    public void createAccount(@RequestParam("accountNr") String accountNr, @RequestParam("balance") Double balance) {
+//        accountBalanceMap.put(accountNr, balance);
+//    }
 
     // http://localhost:8080/bank/account
     @PostMapping("bank/account")
@@ -32,26 +32,26 @@ public class Lesson4aController {
 
     }
     //localhost:8080/bank/account/EE123/500
-    @PutMapping("bank/account/{accountNumber}/{deposit}")
+    @PutMapping("bank/1/account/{accountNumber}/{deposit}")
     public String depositMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("deposit") double amount) {
         if (amount > 0) {
-            Double currentBalance = accountBalanceMap.get(accountNr) + amount;
-            accountBalanceMap.put(accountNr, amount + currentBalance);
+            Double currentBalance = accountBalanceMap.get(accountNr);
+            accountBalanceMap.put(accountNr, currentBalance);
 
         }
-        return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(amount);
+        return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(accountNr);
 
 
     }
     //localhost:8080/bank/account/EE123/500
-    @PutMapping("bank/account/{accountNumber}/{withdraw}")
+    @PutMapping("bank/2/account/{accountNumber}/{withdraw}")
     public String withdrawMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("withdraw") double amount) {
-        if (amount <= accountBalanceMap.get(accountNr)) {
-            Double currentBalance = accountBalanceMap.get(accountNr) - amount;
-            accountBalanceMap.put(accountNr, amount - currentBalance);
+        if (amount >= accountBalanceMap.get(accountNr)) {
+            Double currentBalance = accountBalanceMap.get(accountNr);
+            accountBalanceMap.put(accountNr, currentBalance);
 
         }
-        return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(amount);
+        return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(accountNr);
 
 
     }

@@ -22,6 +22,7 @@ public class TestController {
 
     }
 
+
     //http://localhost:8080/min/1/5
     @GetMapping("min/{a}/{b}")
     public int min(@PathVariable("a") int a, @PathVariable("b") int b) {
@@ -92,6 +93,8 @@ public class TestController {
     public void deleteCars(@PathVariable("id") int identify) {
         carsList.remove(identify);
     }
+
+
 
 //@GetMapping("Cars1")
 //    public List <Cars1>(){
