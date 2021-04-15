@@ -29,49 +29,52 @@ public class Lesson4aController {
     @GetMapping("bank/account/{accountNumber}")
     public String getBalance(@PathVariable("accountNumber") String accountNr) {
         return "Account balance is: " + accountBalanceMap.get(accountNr);
-
     }
-    //localhost:8080/bank/account/EE123/500
+
+    //localhost:8080/bank/1/account/EE123/500
     @PutMapping("bank/1/account/{accountNumber}/{deposit}")
     public String depositMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("deposit") double amount) {
         if (amount > 0) {
             Double currentBalance = accountBalanceMap.get(accountNr);
-            accountBalanceMap.put(accountNr, currentBalance);
-
+            accountBalanceMap.put(accountNr, currentBalance + amount);
         }
         return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(accountNr);
-
-
     }
-    //localhost:8080/bank/account/EE123/500
+
+    //localhost:8080/bank/2/account/EE123/500
     @PutMapping("bank/2/account/{accountNumber}/{withdraw}")
     public String withdrawMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("withdraw") double amount) {
-        if (amount >= accountBalanceMap.get(accountNr)) {
+        if (amount > accountBalanceMap.get(accountNr)) {
+            return "Sorry!!! No money mate, only: " + accountBalanceMap.get(accountNr) + " left";
+        } else {
             Double currentBalance = accountBalanceMap.get(accountNr);
-            accountBalanceMap.put(accountNr, currentBalance);
-
+            accountBalanceMap.put(accountNr, currentBalance - amount);
         }
         return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(accountNr);
 
 
     }
 
+    @PutMapping("bank/3/account/{accountNumber}")
+    public String transfer(@PathVariable("firstAccountNumber") String firstAccountNr,
+                           @RequestBody CreateAccount request) {
+        double firstAccountBalance = accountBalanceMap.get(firstAccountNr);
+        if ((firstAccountBalance) >= (request.getAmount())) {
+            firstAccountBalance = firstAccountBalance - request.getAmount();
+            accountBalanceMap.replace(firstAccountNr, firstAccountBalance);
 
+            double secondAccountBalance = accountBalanceMap.get(request.getAccountNumber());
+            secondAccountBalance = secondAccountBalance + request.getAmount();
+            accountBalanceMap.replace(request.getAccountNumber(), secondAccountBalance);
 
+        }
+        return request.getAmount() + " transfer from " + firstAccountNr +
+                " to " + request.getAccountNumber();
 
+    }
 
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 //                System.out.println("Please enter account nr:");
