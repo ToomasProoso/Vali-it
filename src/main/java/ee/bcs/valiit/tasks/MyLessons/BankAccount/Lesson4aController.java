@@ -1,28 +1,32 @@
 //package ee.bcs.valiit.tasks.MyLessons.BankAccount;
 //
+//import ee.bcs.valiit.solution.controller.CreateAccountRequest;
 //import org.springframework.web.bind.annotation.*;
 //
 //import java.util.HashMap;
 //import java.util.Map;
-//import java.util.Scanner;
+//
 //@RestController
 //public class Lesson4aController {
 //    private static Map<String, Double> accountBalanceMap = new HashMap<>();
-//
-//    @GetMapping
-//    public void createAccount(@RequestParam("account ") String accountNr, Double balance) {
-//        accountBalanceMap.put(accountNr, balance);
-//
-//
-//@PostMapping
-//    public void createAccount2(@RequestBody String accountNr, Double balance) {
-//        accountBalanceMap.put(accountNr, balance);
-//    }
-//
-//    @GetMapping("")
-//
 //    public static void main(String[] args) {
 //
+//    }
+//    // http://localhost:8080/bank/createAccount?accountNr=EE123&balance=1245
+//    @GetMapping("bank/createAccount")
+//    public void createAccount(@RequestParam("accountNr") String accountNr, Double balance){
+//            accountBalanceMap.put(accountNr, balance);
+//
+//        // http://localhost:8080/bank/account
+//            @PostMapping("bank/account")
+//            public void createAccount2 (CreateAccountRequest request){
+//                accountBalanceMap.put(request.getAccountNumber());
+//            }
+//
+//            @GetMapping("")
+//
+//
+//        }
 //
 //            (line.equalsIgnoreCase("createAccount")) {
 //
