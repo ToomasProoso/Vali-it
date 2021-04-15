@@ -1,35 +1,79 @@
-//package ee.bcs.valiit.tasks.MyLessons.BankAccount;
-//
-//import ee.bcs.valiit.solution.controller.CreateAccountRequest;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//@RestController
-//public class Lesson4aController {
-//    private static Map<String, Double> accountBalanceMap = new HashMap<>();
-//    public static void main(String[] args) {
-//
-//    }
-//    // http://localhost:8080/bank/createAccount?accountNr=EE123&balance=1245
-//    @GetMapping("bank/createAccount")
-//    public void createAccount(@RequestParam("accountNr") String accountNr, Double balance){
-//            accountBalanceMap.put(accountNr, balance);
-//
-//        // http://localhost:8080/bank/account
-//            @PostMapping("bank/account")
-//            public void createAccount2 (CreateAccountRequest request){
-//                accountBalanceMap.put(request.getAccountNumber());
-//            }
-//
-//            @GetMapping("")
-//
-//
-//        }
-//
-//            (line.equalsIgnoreCase("createAccount")) {
-//
+package ee.bcs.valiit.tasks.MyLessons.BankAccount;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+public class Lesson4aController {
+    private static Map<String, Double> accountBalanceMap = new HashMap<>();
+
+    public static void main(String[] args) {
+
+    }
+
+    // http://localhost:8080/bank/createAccount?accountNr=EE123&balance=1245
+    @GetMapping("bank/createAccount")
+    public void createAccount(@RequestParam("accountNr") String accountNr, @RequestParam("balance") Double balance) {
+        accountBalanceMap.put(accountNr, balance);
+    }
+
+    // http://localhost:8080/bank/account
+    @PostMapping("bank/account")
+    public void createAccount2(@RequestBody CreateAccount request) {
+        accountBalanceMap.put(request.getAccountNumber(), request.getAmount());
+    }
+
+    // http://localhost:8080/bank/1/account/EE123
+    @GetMapping("bank/1/account/{accountNumber}")
+    public String getBalance(@PathVariable("accountNumber") String accountNr) {
+        return "Account balance is: " + accountBalanceMap.get(accountNr);
+
+    }
+    //localhost:8080/bank/2/account/EE123/500
+    @PutMapping("bank/2/account/{accountNumber}/{deposit}")
+    public String depositMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("deposit") double amount) {
+        if (amount > 0) {
+            Double currentBalance = accountBalanceMap.get(accountNr) + amount;
+            accountBalanceMap.put(accountNr, amount + currentBalance);
+
+        }
+        return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(amount);
+
+
+    }
+    //localhost:8080/bank/3/account/EE123/500
+    @PutMapping("bank/3/account/{accountNumber}/{withdraw}")
+    public String withdrawMoney(@PathVariable("accountNumber") String accountNr, @PathVariable("withdraw") double amount) {
+        if (amount <= accountBalanceMap.get(accountNr)) {
+            Double currentBalance = accountBalanceMap.get(accountNr) - amount;
+            accountBalanceMap.put(accountNr, amount - currentBalance);
+
+        }
+        return "Account: " + accountNr + " balance is: " + accountBalanceMap.get(amount);
+
+
+    }
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //                System.out.println("Please enter account nr:");
 //                String accountNr = scanner.nextLine();
 //                System.out.println("Please enter initial balance");
@@ -104,5 +148,5 @@
 //        }
 //    }
 //}
-//
-//}
+
+

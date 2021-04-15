@@ -76,8 +76,8 @@ public class SampleBankController {
     public void createAccount2(@RequestBody SampleCreateAccountRequest request) {
         accountBalanceMap.put(request.getAccountNumber(), request.getAmount());
     }
-
     // http://localhost:8080/sample/bank/account/EE123
+
     @GetMapping("sample/bank/account/{accountNumber}")
     public String getBalance(@PathVariable("accountNumber") String accountNr){
         return "Konto balanss on: " + accountBalanceMap.get(accountNr);
