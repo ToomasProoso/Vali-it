@@ -1,6 +1,31 @@
 package ee.bcs.valiit.tasks;
 
+import ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi.CreateAccount;
+import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+
 public class Lesson5 {
+
+    private static Map<String, Account> accountMap = new HashMap<>();
+
+    // http://localhost:8080/account
+    @PostMapping("bankAccount/account")
+    public void Account(@RequestBody Account request) {
+        accountMap.put(request.getIban(), request);
+    }
+
+//    @GetMapping("bankAccount/getBalance/{iban}")
+//    public String getBalance(@PathVariable("iban") String iban) {
+//        if (accountMap.get(iban).isLocked() == false) {
+//            return "Thers on account";
+//        }
+//    }
+
     // TODO täienda oma BankControllerit nii, et sa hoiad Map-is konto balanssi asemel konto objekti
     //  1)
     // Selleks loo uus konto objekt, mis sisaldab minimaalselt

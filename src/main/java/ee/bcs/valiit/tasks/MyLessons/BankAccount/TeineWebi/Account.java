@@ -2,7 +2,7 @@ package ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi;
 
 public class Account {
     private String ownerName;
-    private String accountNumber;
+    private String iban;
     private Double balance;
     private boolean locked;
 
@@ -14,12 +14,12 @@ public class Account {
         this.ownerName = ownerName;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getIban() {
+        return iban;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public Double getBalance() {
