@@ -26,7 +26,7 @@ public class Lesson4aController {
     }
 
     // http://localhost:8080/bank/account/EE123
-    @GetMapping("bank/account/{accountNumber}")
+    @GetMapping("bank/{accountNumber}")
     public String getBalance(@PathVariable("accountNumber") String accountNr) {
         return "Account balance is: " + accountBalanceMap.get(accountNr);
     }
@@ -55,7 +55,7 @@ public class Lesson4aController {
 
     }
 
-    @PutMapping("bank/3/account/{accountNumber}")
+    @PutMapping("bank/3/{firstAccountNumber}}")
     public String transfer(@PathVariable("firstAccountNumber") String firstAccountNr,
                            @RequestBody CreateAccount request) {
         double firstAccountBalance = accountBalanceMap.get(firstAccountNr);
@@ -66,10 +66,12 @@ public class Lesson4aController {
             double secondAccountBalance = accountBalanceMap.get(request.getAccountNumber());
             secondAccountBalance = secondAccountBalance + request.getAmount();
             accountBalanceMap.replace(request.getAccountNumber(), secondAccountBalance);
+            return request.getAmount() + " transfer from " + firstAccountNr +
+                    " to " + request.getAccountNumber();
+        } else {
+            return "Not enough money on account nr: " + firstAccountNr;
 
         }
-        return request.getAmount() + " transfer from " + firstAccountNr +
-                " to " + request.getAccountNumber();
 
     }
 
