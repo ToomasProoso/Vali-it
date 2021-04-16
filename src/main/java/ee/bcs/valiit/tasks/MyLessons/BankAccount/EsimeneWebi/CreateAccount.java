@@ -1,4 +1,4 @@
-package ee.bcs.valiit.tasks.MyLessons.BankAccount;
+package ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi;
 
 public class CreateAccount {
     public String getAccountNumber() {

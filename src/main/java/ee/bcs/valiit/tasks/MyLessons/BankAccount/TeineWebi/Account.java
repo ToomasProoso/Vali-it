@@ -1,4 +1,4 @@
-package ee.bcs.valiit.tasks.MyLessons.BankAccount;
+package ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi;
 
 public class Account {
     private String ownerName;

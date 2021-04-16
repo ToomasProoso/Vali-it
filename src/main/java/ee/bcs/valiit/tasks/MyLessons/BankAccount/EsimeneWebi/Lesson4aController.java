@@ -1,5 +1,6 @@
-package ee.bcs.valiit.tasks.MyLessons.BankAccount;
+package ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi;
 
+import ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi.CreateAccount;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class Lesson4aController {
 
     }
 
-    @PutMapping("bank/3/{firstAccountNumber}}")
+    @PutMapping("bank/3/{firstAccountNumber}")
     public String transfer(@PathVariable("firstAccountNumber") String firstAccountNr,
                            @RequestBody CreateAccount request) {
         double firstAccountBalance = accountBalanceMap.get(firstAccountNr);
