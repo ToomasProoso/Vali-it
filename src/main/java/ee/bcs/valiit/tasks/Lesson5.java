@@ -1,6 +1,5 @@
 package ee.bcs.valiit.tasks;
 
-import ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi.CreateAccount;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ public class Lesson5 {
     // http://localhost:8080/account
     @PostMapping("bankAccount/account")
     public void Account(@RequestBody Account request) {
-        accountMap.put(request.getIban(), request);
+        accountMap.put(request.getAccountNumber(), request);
     }
 
 //    @GetMapping("bankAccount/getBalance/{iban}")

@@ -10,7 +10,7 @@ public class ObjectRowMapper implements  org.springframework.jdbc.core.RowMapper
     @Override
     public Account mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         Account account = new Account();
-        account.setIban(resultSet.getString("account_number"));
+        account.setAccountNumber(resultSet.getString("account_number"));
         account.setBalance(resultSet.getDouble("balance"));
        return account;
     }

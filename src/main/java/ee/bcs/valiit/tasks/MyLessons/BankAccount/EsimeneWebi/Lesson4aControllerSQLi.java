@@ -23,11 +23,17 @@ public class Lesson4aControllerSQLi {
     // http://localhost:8080/banksql/createAccount?accountNr=EE123&balance=1550
     @GetMapping("banksql/createAccount")
     public void createAccount(@RequestParam("accountNr") String accountNr,
-                              @RequestParam("balance") Double balance) {
-        String sql = "INSERT INTO account(account_number, balance) VALUES(:dbAccNr, :dbAmount)";
+                              @RequestParam("balance") Double balance,
+                              @RequestParam("locekd") Boolean locked,
+                              @RequestParam("accountId") Integer accountId,
+                              @RequestParam("ownerName") String ownerName) {
+        String sql = "INSERT INTO account(account_number, balance) VALUES(:dbAccNr, :dbBalance, :dbLocked, :dbAccountId, :dbOwnerName)";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("dbAccNr", accountNr);
-        paramMap.put("dbAmount", balance);
+        paramMap.put("dbBalance", balance);
+        paramMap.put("dbLocked", locked);
+        paramMap.put("dbAccountID", accountId);
+        paramMap.put("dbOwnerName", ownerName);
         jdbcTemplate.update(sql, paramMap);
     }
     // http://localhost:8080/banksql/depositMoney?accountNr=EE123&balance=1550

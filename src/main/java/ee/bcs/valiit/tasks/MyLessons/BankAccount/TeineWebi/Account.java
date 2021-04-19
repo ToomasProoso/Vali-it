@@ -2,9 +2,10 @@ package ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi;
 
 public class Account {
     private String ownerName;
-    private String iban;
+    private String accountNumber;
     private Double balance;
     private boolean locked;
+    private int accointId;
 
     public String getOwnerName() {
         return ownerName;
@@ -14,12 +15,12 @@ public class Account {
         this.ownerName = ownerName;
     }
 
-    public String getIban() {
-        return iban;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public Double getBalance() {
@@ -38,5 +39,11 @@ public class Account {
         this.locked = locked;
     }
 
+    public int getAccointId() {
+        return accointId;
+    }
 
+    public void setAccointId(int accointId) {
+        this.accointId = accointId;
+    }
 }
