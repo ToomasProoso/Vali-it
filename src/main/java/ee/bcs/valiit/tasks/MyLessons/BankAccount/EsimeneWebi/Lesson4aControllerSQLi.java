@@ -1,11 +1,13 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi;
 
+import ee.bcs.valiit.solution.controller.ObjectRowMapper;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,47 +22,101 @@ public class Lesson4aControllerSQLi {
 
     }
 
-    // http://localhost:8080/banksql/createAccount?accountNr=EE123&balance=1550
+    // http://localhost:8080/banksql/createAccount?accountNr=EE123&balance=1550&locked=false&accountId=10&ownerName=john
     @GetMapping("banksql/createAccount")
-    public void createAccount(@RequestParam("accountNr") String accountNr,
-                              @RequestParam("balance") Double balance,
-                              @RequestParam("locekd") Boolean locked,
-                              @RequestParam("accountId") Integer accountId,
-                              @RequestParam("ownerName") String ownerName) {
-        String sql = "INSERT INTO account(account_number, balance) VALUES(:dbAccNr, :dbBalance, :dbLocked, :dbAccountId, :dbOwnerName)";
+    public void Account(@RequestParam("accountNr") String accountNr,
+                        @RequestParam("balance") Double balance,
+                        @RequestParam("locked") Boolean locked,
+                        @RequestParam("accountId") Integer accountId,
+                        @RequestParam("ownerName") String ownerName) {
+        String sql = "INSERT INTO account(account_number, balance, locked, account_id, owner_name)" +
+                " VALUES(:dbAccNr, :dbBalance, :dbLocked, :dbAccountId, :dbOwnerName)";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("dbAccNr", accountNr);
         paramMap.put("dbBalance", balance);
         paramMap.put("dbLocked", locked);
-        paramMap.put("dbAccountID", accountId);
+        paramMap.put("dbAccountId", accountId);
         paramMap.put("dbOwnerName", ownerName);
         jdbcTemplate.update(sql, paramMap);
     }
-    // http://localhost:8080/banksql/depositMoney?accountNr=EE123&balance=1550
+
+
+    //localhost:8080/banksql/all
+    @GetMapping("bancsql/all")
+    public List<Account> getAll() {
+        String sql = "SELECT * FROM account";
+        Map<String, Object> accountMap = new HashMap<>();
+        List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
+        return resultList;
+    }
+
+
+    // http://localhost:8080/banksql/depositMoney/
     @PutMapping("banksql/depositMoney")
-    public String depositMoney(@RequestParam CreateAccount depositReq) {
-        if (depositReq.getAmount() > 0) {
-            //new balance for print
-            String old = "SELECT balanc From account Where account_number = :account_number";
+    public String deposit(@RequestBody Account depositReq) {
+        if (depositReq.getBalance() > 0) {
+            //new balance for printbalance
+            String old = "SELECT balance From account Where account_number = :account_number";
             Map<String, Object> paramMap1 = new HashMap<>();
-            paramMap1.put("dbAmount", depositReq.getAmount());
-            paramMap1.put("dbAccNr", depositReq.getAccountNumber());
-            Integer oldBalance = jdbcTemplate.queryForObject(old, paramMap1, Integer.class);
+            paramMap1.put("account_number", depositReq.getAccountNumber());
+            Double oldBalance = jdbcTemplate.queryForObject(old, paramMap1, Double.class);
 
             //insert deposit
-            String insertDeposit = "UPDATE account SET balance = :balance WHERE account = account";
+            String deposit = "UPDATE account SET balance = :balance WHERE account_number = :account_number";
             Map<String, Object> paramMap2 = new HashMap<>();
-            paramMap2.put(("dbAccNr"), depositReq.getAccountNumber());
-            paramMap2.put("dbAmount", depositReq.getAmount() + (double) oldBalance);
-            jdbcTemplate.update(insertDeposit, paramMap2);
+            paramMap2.put(("account_number"), depositReq.getAccountNumber());
+            Double balance = new Double(depositReq.getBalance() + (double) oldBalance);
+            paramMap2.put(("balance"), depositReq.getBalance() + (double) oldBalance);
+            jdbcTemplate.update(deposit, paramMap2);
+            return "Added " + depositReq.getBalance() + " to " + depositReq.getAccountNumber() + " new balance is " +balance;
+        } else {
+            return "Enter a positive value.";
         }
-        return "Added " + depositReq.getAccountNumber() + " to " + depositReq.getAccountNumber() + " new balance is";
-
 
 
 
     }
-}
+
+    // http://localhost:8080/banksql/withdraw/
+    @PutMapping("banksql/withdraw")
+    public String withdraw(@RequestBody Account withdrawReq) {
+        String old = "SELECT balance From account Where account_number = :account_number";
+        Map<String, Object> paramMap1 = new HashMap<>();
+        paramMap1.put("account_number", withdrawReq.getAccountNumber());
+        Double oldBalance = jdbcTemplate.queryForObject(old, paramMap1, Double.class);
+        if (withdrawReq.getBalance() <= oldBalance) {
+
+            String withdraw = "UPDATE account SET balance = :balance WHERE account_number =:account_number";
+            String newBalance = "SELECT balance FROM account Where account_number =:account_number";
+            Map<String, Object> paramMap2 = new HashMap<>();
+            paramMap2.put(("account_number"), withdrawReq.getAccountNumber());
+            paramMap2.put(("balance"), oldBalance - withdrawReq.getBalance());
+            jdbcTemplate.update(withdraw, paramMap2);
+            Double balance = jdbcTemplate.queryForObject(newBalance, paramMap2, Double.class);
+
+            return "withdraw " + withdrawReq.getBalance() + withdrawReq.getAccountNumber() + " new balace in = " + balance;
+
+        } else {
+
+            return "You can't withdraw that much. You have: " + oldBalance;
+
+        }
+
+//        @PutMapping("banksql/transfer")
+//                public String transfer(@RequestBody Account transferReq){
+//            String sql = "SELECT balance From account Where account_number = :fromAccount";
+//            Map<String, Object> paramMap = new HashMap<>();
+//            paramMap.put("fromAccount", transfer.getFromAccount());
+//            Double balance = jdbcTemplate.queryForObject(sql, paramMap, Double.class);
+//            balance= balance-transferReq.get
+//
+//
+//        }
+
+
+
+    }
+
 
 //    @PutMapping("sample/bank/account/{accountNumber}/lock")
 //    public String lock(@PathVariable("accountNumber") String accountNr){
@@ -71,4 +127,4 @@ public class Lesson4aControllerSQLi {
 //    public String unlock(@PathVariable("accountNumber") String accountNr){
 //        return null;
 //    }
-//}
+}
