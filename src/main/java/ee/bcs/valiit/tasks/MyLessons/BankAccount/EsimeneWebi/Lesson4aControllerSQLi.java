@@ -18,6 +18,7 @@ public class Lesson4aControllerSQLi {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+
     public static void main(String[] args) {
 
     }
@@ -42,9 +43,9 @@ public class Lesson4aControllerSQLi {
 
 
     //localhost:8080/banksql/all
-    @GetMapping("bancsql/all")
+    @GetMapping("banksql/all")
     public List<Account> getAll() {
-        String sql = "SELECT * FROM account";
+        String sql = "SELECT*FROM account";
         Map<String, Object> accountMap = new HashMap<>();
         List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
         return resultList;
@@ -68,13 +69,10 @@ public class Lesson4aControllerSQLi {
             Double balance = new Double(depositReq.getBalance() + (double) oldBalance);
             paramMap2.put(("balance"), depositReq.getBalance() + (double) oldBalance);
             jdbcTemplate.update(deposit, paramMap2);
-            return "Added " + depositReq.getBalance() + " to " + depositReq.getAccountNumber() + " new balance is " +balance;
+            return "Added " + depositReq.getBalance() + " to " + depositReq.getAccountNumber() + " new balance is " + balance;
         } else {
             return "Enter a positive value.";
         }
-
-
-
     }
 
     // http://localhost:8080/banksql/withdraw/
@@ -99,21 +97,31 @@ public class Lesson4aControllerSQLi {
         } else {
 
             return "You can't withdraw that much. You have: " + oldBalance;
-
         }
+    }
 
-//        @PutMapping("banksql/transfer")
-//                public String transfer(@RequestBody Account transferReq){
-//            String sql = "SELECT balance From account Where account_number = :fromAccount";
-//            Map<String, Object> paramMap = new HashMap<>();
-//            paramMap.put("fromAccount", transfer.getFromAccount());
-//            Double balance = jdbcTemplate.queryForObject(sql, paramMap, Double.class);
-//            balance= balance-transferReq.get
-//
-//
-//        }
+    @PutMapping("banksql/transfer")
+    public String transfer(@RequestBody Account transferReq) {
+        String transferForm = "SELECT balance From account Where account_number = :account_number";
+        Map<String, Object> paramMap3 = new HashMap<>();
+        paramMap3.put("account_number", transferReq.getAccountNumber());
+        Double balance = jdbcTemplate.queryForObject(transferForm, paramMap3, Double.class);
+        balance = balance -transferReq.getBalance();
+        if (balance>0) {
+            String transferForm1 = "UPDATE account SET balance = dbBalance WHERE account_number = account_number";
+            paramMap3.put("account_number", balance);
+            jdbcTemplate.update(transferForm1, paramMap3);
 
-
+            String transferTo = "SELECT balance From account Where account_number = :account_number";
+            paramMap3.put("account_number", transferReq.getAccountNumber());
+            Double balance1 = jdbcTemplate.queryForObject(transferTo, paramMap3, Double.class);
+            balance1 = balance1 + transferReq.getBalance();
+            String transferTo1 = "UPDATE account SET balance =:dbBalance WHERE account_number =:account_number";
+            paramMap3.put("account_number", balance1);
+            jdbcTemplate.update(transferTo1, paramMap3);
+            return " New balance is " + balance1;
+        }
+return " ";
 
     }
 
