@@ -1,9 +1,11 @@
 package ee.bcs.valiit.tasks;
 
+import java.util.Arrays;
+
 public class Lesson2 {
 
     public static void main(String[] args) {
-
+        System.out.println();
         System.out.println(fibonacci(20));
         multiplyTable(5,5);
         // TODO siia saab kirjutada koodi testimiseks
@@ -12,6 +14,10 @@ public class Lesson2 {
     // TODO loe funktsiooni sisendiks on täisarvude massiiv
     // TODO tagasta massiiv mille elemendid on vastupidises järiekorras
     public static int[] reverseArray(int[] inputArray) {
+        int returnArray[] = new int [inputArray.length];
+        for (int i = inputArray.length-1; i>=0;i--) {
+            returnArray[i] = inputArray[inputArray.length - i - 1];
+        }
         return new int[1];
     }
 

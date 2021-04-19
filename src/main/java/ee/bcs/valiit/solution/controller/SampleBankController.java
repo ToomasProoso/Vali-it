@@ -101,13 +101,13 @@ public class SampleBankController {
         return "Konto balanss on: " + balance;
     }
 
-    @PutMapping("sample/bank/account/{accountNumber}/lock")
-    public String lock(@PathVariable("accountNumber") String accountNr){
-        return null;
-    }
-
-    @PutMapping("sample/bank/account/{accountNumber}/unlock")
-    public String unlock(@PathVariable("accountNumber") String accountNr){
-        return null;
-    }
+//    @PutMapping("sample/bank/account/{accountNumber}/lock")
+//    public String lock(@PathVariable("accountNumber") String accountNr){
+//        return null;
+//    }
+//
+//    @PutMapping("sample/bank/account/{accountNumber}/unlock")
+//    public String unlock(@PathVariable("accountNumber") String accountNr){
+//        return null;
+//    }
 }
