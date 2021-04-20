@@ -101,27 +101,27 @@ public class Lesson4aControllerSQLi {
     }
 
     @PutMapping("banksql/transfer")
-    public String transfer(@RequestBody Account transferReq) {
+    public String transfer(@RequestBody TransferMoneyRequest transferReq) {
         String transferForm = "SELECT balance From account Where account_number = :account_number";
         Map<String, Object> paramMap3 = new HashMap<>();
         paramMap3.put("account_number", transferReq.getAccountNumber());
         Double balance = jdbcTemplate.queryForObject(transferForm, paramMap3, Double.class);
-        balance = balance -transferReq.getBalance();
-        if (balance>0) {
-            String transferForm1 = "UPDATE account SET balance = dbBalance WHERE account_number = account_number";
-            paramMap3.put("account_number", balance);
+        balance = balance - transferReq.getBalance();
+        if (balance >= 0) {
+            String transferForm1 = "UPDATE account SET balance = :balance WHERE account_number = :account_number";
+            paramMap3.put("balance", balance);
             jdbcTemplate.update(transferForm1, paramMap3);
 
             String transferTo = "SELECT balance From account Where account_number = :account_number";
-            paramMap3.put("account_number", transferReq.getAccountNumber());
+            paramMap3.put("account_number", transferReq.getAccountNumber1());
             Double balance1 = jdbcTemplate.queryForObject(transferTo, paramMap3, Double.class);
             balance1 = balance1 + transferReq.getBalance();
-            String transferTo1 = "UPDATE account SET balance =:dbBalance WHERE account_number =:account_number";
-            paramMap3.put("account_number", balance1);
+            String transferTo1 = "UPDATE account SET balance =:balance1 WHERE account_number =:account_number";
+            paramMap3.put("balance1", balance1);
             jdbcTemplate.update(transferTo1, paramMap3);
             return " New balance is " + balance1;
         }
-return " ";
+        return " ";
 
     }
 
