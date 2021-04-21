@@ -3,9 +3,10 @@ package ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi;
 public class Account {
     private String ownerName;
     private String accountNumber;
+    private String accountNumber1;
     private Double balance;
     private boolean locked;
-    private int accointId;
+    private int accountId;
 
     public String getOwnerName() {
         return ownerName;
@@ -39,11 +40,19 @@ public class Account {
         this.locked = locked;
     }
 
-    public int getAccointId() {
-        return accointId;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setAccointId(int accointId) {
-        this.accointId = accointId;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAccountNumber1() {
+        return accountNumber1;
+    }
+
+    public void setAccountNumber1(String accountNumber1) {
+        this.accountNumber1 = accountNumber1;
     }
 }

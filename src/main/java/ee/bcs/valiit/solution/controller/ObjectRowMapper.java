@@ -13,7 +13,7 @@ public class ObjectRowMapper implements  org.springframework.jdbc.core.RowMapper
         account.setAccountNumber(resultSet.getString("account_number"));
         account.setBalance(resultSet.getDouble("balance"));
         account.setLocked(resultSet.getBoolean("locked"));
-        account.setAccointId(resultSet.getInt("account_id"));
+        account.setAccountId(resultSet.getInt("account_id"));
         account.setOwnerName(resultSet.getString("owner_name"));
        return account;
     }

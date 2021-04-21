@@ -46,32 +46,34 @@ public class Lesson4aControllerSQLi {
         List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
         return resultList;
     }
+
     // http://localhost:8080/banksql/depositMoney/
     @PutMapping("banksql/deposit")
     public String deposit(@RequestBody Account depositReq) {
-      return  bankServiseSQL.deposit(depositReq);
+        return bankServiseSQL.deposit(depositReq);
 
     }
+
     // http://localhost:8080/banksql/withdraw/
     @PutMapping("banksql/withdraw")
     public String withdraw(@RequestBody Account withdrawReq) {
         return bankServiseSQL.withdraw(withdrawReq);
 
     }
+
     @PutMapping("banksql/transfer")
     public String transfer(@RequestBody Account transferReq) {
-        return bankServiseSQL.deposit(transferReq);
+        return bankServiseSQL.transfer(transferReq);
 
     }
 
+    @PutMapping("banksql/account/{accountNumber}/lock")
+    public String lock(@PathVariable("accountNumber") String accountNr) {
+        return null;
+    }
 
-//    @PutMapping("sample/bank/account/{accountNumber}/lock")
-//    public String lock(@PathVariable("accountNumber") String accountNr){
-//        return null;
-//    }
-//
-//    @PutMapping("sample/bank/account/{accountNumber}/unlock")
-//    public String unlock(@PathVariable("accountNumber") String accountNr){
-//        return null;
-//    }
+    @PutMapping("banksql/account/{accountNumber}/unlock")
+    public String unlock(@PathVariable("accountNumber") String accountNr) {
+        return null;
+    }
 }

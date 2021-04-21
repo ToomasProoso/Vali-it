@@ -13,7 +13,7 @@ public class BankRepositorySQL {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public void account(String accountNr, Double balance, Boolean locked, Integer accountId, String ownerName) {
+    public void getAccount(String accountNr, Double balance, Boolean locked, Integer accountId, String ownerName) {
         String sql = "INSERT INTO account(account_number, balance, locked, account_id, owner_name)" +
                 " VALUES(:dbAccNr, :dbBalance, :dbLocked, :dbAccountId, :dbOwnerName)";
         Map<String, Object> paramMap = new HashMap<>();
@@ -26,8 +26,7 @@ public class BankRepositorySQL {
 
     }
 
-    public double account(String accountNr) {
-
+    public double getAccount(String accountNr) {
         String old = "SELECT balance From account Where account_number = :account_number";
         Map<String, Object> paramMap1 = new HashMap<>();
         paramMap1.put("account_number", accountNr);
@@ -42,45 +41,6 @@ public class BankRepositorySQL {
         jdbcTemplate.update(deposit, paramMap2);
 
     }
-
-    public void withdraw(String accountNumber, Double newBalance) {
-        String withdraw = "UPDATE account SET balance = :balance WHERE account_number =:account_number";
-        Map<String, Object> paramMap4 = new HashMap<>();
-        paramMap4.put(("account_number"), accountNumber);
-        paramMap4.put(("balance"), newBalance);
-        jdbcTemplate.update(withdraw, paramMap4);
-
-    }
-
-    public Double transferfrom(String accountNumber, Double balance) {
-        String sql = "SELECT balance From account Where account_number = :account_number";
-        Map<String, Object> paramMap3 = new HashMap<>();
-        paramMap3.put("account_number", accountNumber  );
-        return jdbcTemplate.queryForObject(sql, paramMap3, Double.class);
-
-    }
-    public void transferfrom1(String accountNumber, Double balance){
-        String sql1 = "UPDATE account SET balance = :balance WHERE account_number = :account_number";
-        Map<String, Object> paramMap5 = new HashMap<>();
-        paramMap5.put("balance", balance);
-        jdbcTemplate.update(sql1, paramMap5);
-
-    }
-    public Double transferTo(String accountNumber, Double balance1){
-        String sql2 = "SELECT balance From account Where account_number = :account_number";
-        Map<String, Object> paramMap6 = new HashMap<>();
-        paramMap6.put("account_number", accountNumber);
-        return jdbcTemplate.queryForObject(sql2, paramMap6, Double.class);
-
-    }
-    public void transferTo1(String accountNumber, Double balance1){
-        String sql3 = "UPDATE account SET balance =:balance1 WHERE account_number =:account_number";
-        Map<String, Object> paramMap7 = new HashMap<>();
-        paramMap7.put("balance1", balance1);
-        jdbcTemplate.update(sql3, paramMap7);
-
-    }
-
 
 
 }
