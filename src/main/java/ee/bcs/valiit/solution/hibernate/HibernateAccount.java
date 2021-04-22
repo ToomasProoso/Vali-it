@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Table(name = "account")
 @Entity
-public class account {
+public class HibernateAccount {
     @Id
     private String accountNumber;
     private Double balance;

@@ -3,6 +3,7 @@ package ee.bcs.valiit.tasks.MyLessons.BankAccountSQL;
 
 import ee.bcs.valiit.solution.exception.SampleApplicationException;
 import ee.bcs.valiit.solution.hibernate.AccountRepository;
+import ee.bcs.valiit.solution.hibernate.HibernateAccount;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -29,7 +30,7 @@ public class BankServiseSQL {
         if (depositReq.getBalance() < 0) {
             throw new SampleApplicationException("The amount cannot be negative");
         }
-        Account account = hibernateRepository.getOne(depositReq.getAccountNumber());
+        HibernateAccount account = hibernateRepository.getOne(depositReq.getAccountNumber());
 //        Double oldBalance = bankRepositorySQL.getAccount(depositReq.getAccountNumber());
         Double newBalance = depositReq.getBalance() + (double) account.getBalance();
         account.setBalance(newBalance);
@@ -43,9 +44,12 @@ public class BankServiseSQL {
         if (withdrawReq.getBalance() >= 0) {
             throw new SampleApplicationException("You can't withdraw that much.");
         }
-        Double oldBalance = bankRepositorySQL.getAccount(withdrawReq.getAccountNumber());
-        Double newBalance = (double) oldBalance - withdrawReq.getBalance();
-        bankRepositorySQL.updateBalance(withdrawReq.getAccountNumber(), newBalance);
+        HibernateAccount account = hibernateRepository.getOne(withdrawReq.getAccountNumber());
+//        Double oldBalance = bankRepositorySQL.getAccount(withdrawReq.getAccountNumber());
+        Double newBalance = (double) account.getBalance() - withdrawReq.getBalance();
+        account.setBalance(newBalance);
+        hibernateRepository.save(account);
+//        bankRepositorySQL.updateBalance(withdrawReq.getAccountNumber(), newBalance);
         return "withdraw " + withdrawReq.getBalance() + withdrawReq.getAccountNumber() + " new balace in = " + newBalance;
 
     }
