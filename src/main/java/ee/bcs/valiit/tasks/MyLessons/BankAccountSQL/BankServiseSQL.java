@@ -1,6 +1,7 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccountSQL;
 
 
+import ee.bcs.valiit.solution.exception.SampleApplicationException;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,38 +21,39 @@ public class BankServiseSQL {
     }
 
     public String deposit(Account depositReq) {
-        if (depositReq.getBalance() >= 0) {
-            Double oldBalance = bankRepositorySQL.getAccount(depositReq.getAccountNumber());
-            Double newBalance = depositReq.getBalance() + (double) oldBalance;
-            bankRepositorySQL.updateBalance(depositReq.getAccountNumber(), newBalance);
-            return "Added " + depositReq.getBalance() + " to " + depositReq.getAccountNumber() + " new balance is " + newBalance;
-        } else {
-            return "Enter a positive value.";
+        if (depositReq.getBalance() < 0) {
+            throw new SampleApplicationException("The amount cannot be negative");
         }
+        Double oldBalance = bankRepositorySQL.getAccount(depositReq.getAccountNumber());
+        Double newBalance = depositReq.getBalance() + (double) oldBalance;
+        bankRepositorySQL.updateBalance(depositReq.getAccountNumber(), newBalance);
+        return "Added " + depositReq.getBalance() + " to " + depositReq.getAccountNumber() + " new balance is " + newBalance;
+
     }
 
     public String withdraw(Account withdrawReq) {
         if (withdrawReq.getBalance() >= 0) {
-            Double oldBalance = bankRepositorySQL.getAccount(withdrawReq.getAccountNumber());
-            Double newBalance = (double) oldBalance - withdrawReq.getBalance();
-            bankRepositorySQL.updateBalance(withdrawReq.getAccountNumber(), newBalance);
-            return "withdraw " + withdrawReq.getBalance() + withdrawReq.getAccountNumber() + " new balace in = " + newBalance;
+            throw new SampleApplicationException("You can't withdraw that much.");
         }
-        return "You can't withdraw that much.";
+        Double oldBalance = bankRepositorySQL.getAccount(withdrawReq.getAccountNumber());
+        Double newBalance = (double) oldBalance - withdrawReq.getBalance();
+        bankRepositorySQL.updateBalance(withdrawReq.getAccountNumber(), newBalance);
+        return "withdraw " + withdrawReq.getBalance() + withdrawReq.getAccountNumber() + " new balace in = " + newBalance;
+
     }
 
     public String transfer(Account transferReq) {
         Double balance = bankRepositorySQL.getAccount(transferReq.getAccountNumber());
         balance = balance - transferReq.getBalance();
-        if (balance >= 0) {
-            bankRepositorySQL.updateBalance(transferReq.getAccountNumber(), balance);
-            Double balance1 = bankRepositorySQL.getAccount(transferReq.getAccountNumber1());
-            balance1 = balance1 + transferReq.getBalance();
-            bankRepositorySQL.updateBalance(transferReq.getAccountNumber1(), balance1);
-            return " New balance is " + balance1;
+        if (balance < 0) {
+            throw new SampleApplicationException("You can't transfer that much.");
         }
-        return " ";
-
+        bankRepositorySQL.updateBalance(transferReq.getAccountNumber(), balance);
+        Double balance1 = bankRepositorySQL.getAccount(transferReq.getAccountNumber1());
+        balance1 = balance1 + transferReq.getBalance();
+        bankRepositorySQL.updateBalance(transferReq.getAccountNumber1(), balance1);
+        return "You transfer form account " + transferReq.getAccountNumber() + " new balance is: "+ balance +
+                " and account " + transferReq.getAccountNumber1() + " new balance is " + balance1;
 
     }
 
