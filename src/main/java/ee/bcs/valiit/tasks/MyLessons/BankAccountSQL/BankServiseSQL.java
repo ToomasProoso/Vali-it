@@ -2,6 +2,7 @@ package ee.bcs.valiit.tasks.MyLessons.BankAccountSQL;
 
 
 import ee.bcs.valiit.solution.exception.SampleApplicationException;
+import ee.bcs.valiit.solution.hibernate.AccountRepository;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +17,10 @@ public class BankServiseSQL {
     @Autowired
     private BankRepositorySQL bankRepositorySQL;
 
+    @Autowired
+    private AccountRepository hibernateRepository;
+
+
     public void account(String accountNr, Double balance, Boolean locked, Integer accountId, String ownerName) {
         bankRepositorySQL.getAccount(accountNr, balance, locked, accountId, ownerName);
     }
@@ -24,9 +29,12 @@ public class BankServiseSQL {
         if (depositReq.getBalance() < 0) {
             throw new SampleApplicationException("The amount cannot be negative");
         }
-        Double oldBalance = bankRepositorySQL.getAccount(depositReq.getAccountNumber());
-        Double newBalance = depositReq.getBalance() + (double) oldBalance;
-        bankRepositorySQL.updateBalance(depositReq.getAccountNumber(), newBalance);
+        Account account = hibernateRepository.getOne(depositReq.getAccountNumber());
+//        Double oldBalance = bankRepositorySQL.getAccount(depositReq.getAccountNumber());
+        Double newBalance = depositReq.getBalance() + (double) account.getBalance();
+        account.setBalance(newBalance);
+        hibernateRepository.save(account);
+//        bankRepositorySQL.updateBalance(depositReq.getAccountNumber(), newBalance);
         return "Added " + depositReq.getBalance() + " to " + depositReq.getAccountNumber() + " new balance is " + newBalance;
 
     }
