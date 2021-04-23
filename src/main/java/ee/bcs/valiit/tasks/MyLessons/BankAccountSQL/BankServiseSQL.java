@@ -8,6 +8,7 @@ import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BankServiseSQL {
@@ -54,17 +55,26 @@ public class BankServiseSQL {
         return "withdraw " + withdrawReq.getBalance() + withdrawReq.getAccountNumber() + " new balace in = " + newBalance;
 
     }
+@Transactional
+//transfer meetodil saab @Transactional viitega hibernateRepository.save(account);ära kustutada,
+//kui panna classi ette siis võib kõigil meetoditel savei ära kustutada
 
     public String transfer(Account transferReq) {
-        Double balance = bankRepositorySQL.getAccount(transferReq.getAccountNumber());
-        balance = balance - transferReq.getBalance();
+        HibernateAccount account = hibernateRepository.getOne(transferReq.getAccountNumber());
+//        Double balance = bankRepositorySQL.getAccount(transferReq.getAccountNumber());
+        Double balance = (double)account.getBalance() - transferReq.getBalance();
+        account.setBalance(balance);
         if (balance < 0) {
             throw new SampleApplicationException("You can't transfer that much.");
         }
-        bankRepositorySQL.updateBalance(transferReq.getAccountNumber(), balance);
-        Double balance1 = bankRepositorySQL.getAccount(transferReq.getAccountNumber1());
-        balance1 = balance1 + transferReq.getBalance();
-        bankRepositorySQL.updateBalance(transferReq.getAccountNumber1(), balance1);
+//        hibernateRepository.save(account);
+//        bankRepositorySQL.updateBalance(transferReq.getAccountNumber(), balance);
+        HibernateAccount account1 = hibernateRepository.getOne(transferReq.getAccountNumber1());
+//        Double balance1 = bankRepositorySQL.getAccount(transferReq.getAccountNumber1());
+        Double balance1 = (double) account1.getBalance() + transferReq.getBalance();
+        account1.setBalance(balance1);
+//        hibernateRepository.save(account1);
+//        bankRepositorySQL.updateBalance(transferReq.getAccountNumber1(), balance1);
         return "You transfer form account " + transferReq.getAccountNumber() + " new balance is: "+ balance +
                 " and account " + transferReq.getAccountNumber1() + " new balance is " + balance1;
 
