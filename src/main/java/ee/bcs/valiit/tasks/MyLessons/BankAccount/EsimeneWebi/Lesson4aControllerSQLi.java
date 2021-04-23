@@ -48,6 +48,7 @@ public class Lesson4aControllerSQLi {
     }
 
     // http://localhost:8080/banksql/depositMoney/
+    @CrossOrigin
     @PutMapping("banksql/deposit")
     public String deposit(@RequestBody Account depositReq) {
         return bankServiseSQL.deposit(depositReq);

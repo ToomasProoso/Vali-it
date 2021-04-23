@@ -9,8 +9,8 @@
         }
 
         button {
-            width: 200px;
-            padding: 15px 0;
+            width: 150px;
+            padding: 10px 0;
             text-align: center;
             margin: 20px 10px;
             border-radius: 25px;
@@ -29,46 +29,42 @@
 <h2> Bank account</h2>
 
 <br>
-<button id="myButton">Insert new account!</button> <tr>
-    <td><input></td>
-</tr>
-<dl></dl>
-<button id="myButton1">Get deposit!</button> <tr>
-    <td>Insert account number </td>
-</tr> <tr>
-    <td><input></td> <tr>
-    <td> account deposit is </td> <tr>
-    <td><input></td>
+<button id="myButton">activate account!</button> Insert account number: <input id=>
 
-</tr>
-<dl></dl>
-<button id="myButton2">Deposit!</button> <tr>
-    <td>Insert account number </td>
-</tr> <tr>
-    <td><input></td> <tr>
-    <td> insert amount </td> <tr>
-    <td><input></td>
 
-</tr>
 <dl></dl>
-<button id="myButton3">Withdraw!</button> <tr>
-    <td>Insert account number </td>
-</tr> <tr>
-    <td><input></td> <tr>
-    <td> insert amount </td> <tr>
-    <td><input></td>
-</tr>
-<dl></dl>
-<button id="myButton4">Transfer!</button> <tr>
-    <td> From </td> <tr>
-    <td><input></td>
-</tr> <tr>
-    <td> to </td> <tr>
-    <td><input></td> <tr>
-    <td> amount </td> <tr>
-    <td><input></td>
-</tr>
+<button id="myButton2">Deposit!</button> Insert account number: <input id=> insert amount: <input id = >
 
+
+<dl></dl>
+<button id="myButton3">Withdraw!</button> Insert account number: <input id=> insert amount: <input id = >
+<dl></dl>
+
+<button id="myButton4">Transfer!</button> From: <input id=> to: <input id = > amount: <input id = >
+<dl></dl>
+
+
+<button id="myButton5">Refresh accounts!</button>
+<dl></dl>
+Account: <input id=> account deposit: <input id = >
+<dl></dl>
+Account: <input id=> account deposit: <input id = >
+<dl></dl>
+Account: <input id=> account deposit: <input id = >
+<dl></dl>
+Account: <input id=> account deposit: <input id = >
+
+<script>
+    let url = "";
+    let configuration = {
+        method: 'POST',
+        header: {
+            "content-Type": "application/json"
+        }
+
+    }
+
+</script>
 
 </table>
 </body>
