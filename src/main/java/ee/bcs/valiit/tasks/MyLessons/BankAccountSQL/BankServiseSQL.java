@@ -2,7 +2,7 @@ package ee.bcs.valiit.tasks.MyLessons.BankAccountSQL;
 
 
 import ee.bcs.valiit.solution.exception.SampleApplicationException;
-import ee.bcs.valiit.solution.hibernate.AccountRepository;
+import ee.bcs.valiit.solution.hibernate.HibernateAccountRepository;
 import ee.bcs.valiit.solution.hibernate.HibernateAccount;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,8 @@ public class BankServiseSQL {
     private BankRepositorySQL bankRepositorySQL;
 
     @Autowired
-    private AccountRepository hibernateRepository;
+    private HibernateAccountRepository hibernateRepository;
+
 
 
     public void account(String accountNr, Double balance, Boolean locked, Integer accountId, String ownerName) {
