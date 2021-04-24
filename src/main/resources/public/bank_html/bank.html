@@ -29,43 +29,68 @@
 <h2> Bank account</h2>
 
 <br>
-<button id="myButton">activate account!</button> Insert account number: <input id=>
+<button id="createAccount">activate account!</button>
+Insert account number: <input id="accountNumber">
 
 
 <dl></dl>
-<button id="myButton2">Deposit!</button> Insert account number: <input id=> insert amount: <input id = >
+<button id="myButton2">Deposit!</button>
+Insert account number: <input id=""> insert amount: <input id="deposit">
 
 
 <dl></dl>
-<button id="myButton3">Withdraw!</button> Insert account number: <input id=> insert amount: <input id = >
+<button id="myButton3">Withdraw!</button>
+Insert account number: <input id=> insert amount: <input id=>
 <dl></dl>
 
-<button id="myButton4">Transfer!</button> From: <input id=> to: <input id = > amount: <input id = >
+<button id="myButton4">Transfer!</button>
+From: <input id=> to: <input id=> amount: <input id=>
 <dl></dl>
 
 
-<button id="myButton5">Refresh accounts!</button>
+<button id="refreshAccount">Refresh accounts!</button>
 <dl></dl>
-Account: <input id=> account deposit: <input id = >
+Account: <input id=> account deposit: <input id=>
 <dl></dl>
-Account: <input id=> account deposit: <input id = >
+Account: <input id=> account deposit: <input id=>
 <dl></dl>
-Account: <input id=> account deposit: <input id = >
+Account: <input id=> account deposit: <input id=>
 <dl></dl>
-Account: <input id=> account deposit: <input id = >
+Account: <input id=> account deposit: <input id=>
 
 <script>
-    let url = "";
-    let configuration = {
-        method: 'POST',
-        header: {
-            "content-Type": "application/json"
+    let createButton = document.getElementById("createAccount");
+    let getBalanceButton = document.getElementById("refreshAccount");
+    let createAccountInput = document.getElementById("accountNumber");
+    createButton.onclick = function () {
+        let requestObject = {
+            'accountNumber': accountNumber.value,
+            'balance': 0
         }
 
+        let url = "http://localhost:8080/banksql/createAccount?accountNr="+createAccountInput.value+"&balance=0";
+        // let configuration = {
+        //     method: 'POST',
+        //     header: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(requestObject)
+        // }
+//        fetch(url, configuration);
+        fetch(url);
     }
-
+    getBalanceButton.onclick = function (){
+        let requestObject = {
+            'accountNumber': accountNumber.value,
+            'balance' : 0
+        }
+        fetch("http://localhost:8080/banksql/createAccount" + accountNumber.value)
+        .then(response => response.text())
+        .then(function (response){
+            alert(response)
+        })
+    }
 </script>
-
 </table>
 </body>
 </html>

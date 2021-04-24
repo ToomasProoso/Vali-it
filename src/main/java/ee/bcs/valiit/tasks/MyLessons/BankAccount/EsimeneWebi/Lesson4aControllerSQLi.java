@@ -28,12 +28,13 @@ public class Lesson4aControllerSQLi {
     }
 
     // http://localhost:8080/banksql/createAccount?accountNr=EE123&balance=1550&locked=false&accountId=10&ownerName=john
+   @CrossOrigin
     @GetMapping("banksql/createAccount")
     public void account(@RequestParam("accountNr") String accountNr,
                         @RequestParam("balance") Double balance,
-                        @RequestParam("locked") Boolean locked,
-                        @RequestParam("accountId") Integer accountId,
-                        @RequestParam("ownerName") String ownerName) {
+                        @RequestParam(value = "locked",required = false) Boolean locked,
+                        @RequestParam(value = "accountId",required = false) Integer accountId,
+                        @RequestParam(value = "ownerName",required = false) String ownerName) {
         bankServiseSQL.account(accountNr, balance, locked, accountId, ownerName);
     }
 
