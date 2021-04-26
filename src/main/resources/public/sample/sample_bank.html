@@ -22,7 +22,7 @@
         }
         let url = "http://localhost:8080/sample/bank/account";
         let configuration = {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -30,6 +30,9 @@
         }
         fetch(url, configuration);
     }
+
+
+
     getBalanceButton.onclick = function () {
         let requestObject = {
             'accountNumber': accountNumber.value,

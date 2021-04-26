@@ -1,7 +1,9 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi;
 
+import com.fasterxml.jackson.databind.introspect.WithMember;
 import ee.bcs.valiit.solution.controller.ObjectRowMapper;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
+import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.WithdrawMoneyRequest;
 import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.BankServiseSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -40,6 +42,7 @@ public class Lesson4aControllerSQLi {
 
 
     //localhost:8080/banksql/all
+    @CrossOrigin
     @GetMapping("banksql/all")
     public List<Account> getAll() {
         String sql = "SELECT*FROM account";
@@ -57,12 +60,13 @@ public class Lesson4aControllerSQLi {
     }
 
     // http://localhost:8080/banksql/withdraw/
+    @CrossOrigin
     @PutMapping("banksql/withdraw")
-    public String withdraw(@RequestBody Account withdrawReq) {
+    public String withdraw(@RequestBody WithdrawMoneyRequest withdrawReq) {
         return bankServiseSQL.withdraw(withdrawReq);
 
     }
-
+    @CrossOrigin
     @PutMapping("banksql/transfer")
     public String transfer(@RequestBody Account transferReq) {
         return bankServiseSQL.transfer(transferReq);

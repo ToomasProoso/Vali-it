@@ -5,6 +5,7 @@ import ee.bcs.valiit.solution.exception.SampleApplicationException;
 import ee.bcs.valiit.solution.hibernate.HibernateAccountRepository;
 import ee.bcs.valiit.solution.hibernate.HibernateAccount;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
+import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.WithdrawMoneyRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -42,11 +43,11 @@ public class BankServiseSQL {
 
     }
 
-    public String withdraw(Account withdrawReq) {
-        if (withdrawReq.getBalance() >= 0) {
+    public String withdraw(WithdrawMoneyRequest withdrawReq) {
+        HibernateAccount account = hibernateRepository.getOne(withdrawReq.getAccountNumber());
+        if (withdrawReq.getBalance() > account.getBalance()) {
             throw new SampleApplicationException("You can't withdraw that much.");
         }
-        HibernateAccount account = hibernateRepository.getOne(withdrawReq.getAccountNumber());
 //        Double oldBalance = bankRepositorySQL.getAccount(withdrawReq.getAccountNumber());
         Double newBalance = (double) account.getBalance() - withdrawReq.getBalance();
         account.setBalance(newBalance);

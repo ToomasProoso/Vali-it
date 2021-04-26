@@ -17,4 +17,5 @@ public class ObjectRowMapper implements  org.springframework.jdbc.core.RowMapper
         account.setOwnerName(resultSet.getString("owner_name"));
        return account;
     }
+
 }

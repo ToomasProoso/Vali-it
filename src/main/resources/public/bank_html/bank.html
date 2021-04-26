@@ -5,7 +5,9 @@
     <title>Title</title>
     <style>
         body {
-            background-color: #a0cbcd;
+            background: #44A08D; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #54bfa8, #093637); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #44A08D, #093637); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
 
         button {
@@ -15,11 +17,19 @@
             margin: 20px 10px;
             border-radius: 25px;
             font-weight: bold;
-            border: 2px solid #009688;
+            border: 2px solid #213b38;
             background: transparent;
             color: #009;
             cursor: pointer;
             position: relative;
+        }
+
+        button:hover {
+            color: #ffffff;
+        }
+
+        button:hover:after {
+            width: 100%;
         }
 
     </style>
@@ -30,91 +40,180 @@
 <br>
 <button id="createAccount">activate account!</button>
 Insert account number: <input id="accountNumber">
-
+<p>
+    New account you entered is : <span id="printAccountNumber"></span>
+</p>
 <script>
-    //createAccount balance = hardCoded = 0
+    //createAccount balance = hardCoded = 0, @RequestParam
     let createButton = document.getElementById("createAccount");
     let createAccountInput = document.getElementById("accountNumber");
+    let printAccountNumber = document.getElementById("printAccountNumber")
     createButton.onclick = function () {
         let requestObject = {
             'accountNumber': accountNumber.value,
             'balance': 0
         }
-
         let url = "http://localhost:8080/banksql/createAccount?accountNr=" + createAccountInput.value + "&balance=0";
-        // let configuration = {
-        //     method: 'POST',
-        //     header: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(requestObject)
-        // }
-//        fetch(url, configuration);
-        fetch(url);
+        fetch(url)
+            // .then(response => response.text())
+            .then(function (response) {
+                if (response.status > 200) {
+                    alert("Something is Wrong")
+                } else {
+                    printAccountNumber.innerText = createAccountInput.value
+                    alert("OK")
+                }
+            })
     }
 </script>
-
+<!-- deposit money-->
 <dl></dl>
-<button id="depositMoney">Deposit!</button>
-Insert account number: <input id="accountDeposit"> insert amount: <input id="depositAmount">
-
+<button id="accountDeposit">Deposit!</button>
+Insert account number: <input id="accountNumber2"> insert amount: <input id="balance">
+<p>
+    Account balance is : <span id="printAccountBalance"></span>
+</p>
 <script>
-    let depositButton = document.getElementById("depositMoney");
-    let depositMoneyInput = document.getElementById("accountDeposit");
-    let depositAmount = document.getElementById("depositAmount")
+    let accountNumber2 = document.getElementById("accountNumber2");
+    let depositAmount = document.getElementById("balance")
+    let depositButton = document.getElementById("accountDeposit");
+    let printAccountBalance = document.getElementById("printAccountBalance")
     depositButton.onclick = function () {
         let requestObject = {
-            'accountDeposit': accountNumber.value,
-            'depositAmount': depositAmount.value,
+            'accountNumber': accountNumber2.value,
+            'balance': depositAmount.value,
         }
 
-        let url = "http://localhost:8080/banksql/deposit=";
+        let url = "http://localhost:8080/banksql/deposit";
         let configuration = {
             method: 'PUT',
-            header: {
+            headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(requestObject)
         }
-        fetch(url, configuration);
+        fetch(url, configuration)
+            .then(function (response) {
+                if (response.status > 200) {
+                    alert("Something is Wrong")
+                } else {
+                   printAccountBalance.innerText = printAccountBalance.value
+                    alert("OK")
+                }
+            })
 
     }
 </script>
 
 <dl></dl>
-<button id="myButton3">Withdraw!</button>
-Insert account number: <input id=> insert amount: <input id=>
-<dl></dl>
+<button id="accountWithdraw">Withdraw!</button>
+Insert account number: <input id="accountNumber3"> insert amount: <input id="balance1">
 
-<button id="myButton4">Transfer!</button>
-From: <input id=> to: <input id=> amount: <input id=>
-
+<p>
+    Account balance is : <span id="printAccountWithdraw"></span>
+</p>
 <script>
-    // getBalance
-    let getBalanceButton = document.getElementById("refreshAccount");
-    getBalanceButton.onclick = function () {
+    let accountNumber3 = document.getElementById("accountNumber3");
+    let withdrawAmount = document.getElementById("balance1")
+    let withdrawButton = document.getElementById("accountWithdraw");
+    withdrawButton.onclick = function () {
         let requestObject = {
-            'accountNumber': accountNumber.value,
-            'balance': 0
+            'accountNumber': accountNumber3.value,
+            'balance': Number(withdrawAmount.value),
         }
-        fetch("http://localhost:8080/banksql/createAccount=" + accountNumber.value)
-            .then(response => response.text())
+
+        let url = "http://localhost:8080/banksql/withdraw";
+        let configuration = {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestObject)
+        }
+        fetch(url, configuration)
             .then(function (response) {
-                alert(response)
+                if (response.status > 200) {
+                    response.json().then(
+                        function (response2) {
+                            alert(response2.message);
+                        }
+                    )
+                } else {
+                    alert("OK")
+                }
+            })
+    }
+
+
+</script>
+
+<dl></dl>
+<button id="accountTransfer">Transfer!</button>
+From: <input id="accountNumber4"> to: <input id="accountNumber5"> amount: <input id="balance2">
+<p>
+    Account balance is : <span id="printAccountTransfer"></span>
+</p>
+<script>
+    let accountNumber4 = document.getElementById("accountNumber4");
+    let accountNumber5 = document.getElementById("accountNumber5")
+    let transferAmount = document.getElementById("balance2")
+    let transferButton = document.getElementById("accountTransfer");
+    transferButton.onclick = function () {
+        let requestObject = {
+            'accountNumber': accountNumber4.value,
+            'accountNumber1': accountNumber5.value,
+            'balance': transferAmount.value,
+        }
+
+        let url = "http://localhost:8080/banksql/transfer";
+        let configuration = {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestObject)
+        }
+        fetch(url, configuration)
+            .then(function (response) {
+                if (response.status > 200) {
+                    response.json().then(
+                        function (response2) {
+                            alert(response2.message);
+                        }
+                    )
+                } else {
+                    alert("OK")
+                }
             })
     }
 </script>
 
-<dl></dl>
-<button id="refreshAccount">Refresh accounts!</button>
-<dl></dl>
-Account: <input id=> account deposit: <input id=>
-<dl></dl>
-Account: <input id=> account deposit: <input id=>
-<dl></dl>
-Account: <input id=> account deposit: <input id=>
-<dl></dl>
-Account: <input id=> account deposit: <input id=>
+<!--<dl></dl>-->
+<!--<button id="refreshAccount">Refresh accounts!</button>-->
+<!--<dl></dl>-->
+<!--Account: <input id=> account deposit: <input id=>-->
+<!--<dl></dl>-->
+<!--Account: <input id=> account deposit: <input id=>-->
+<!--<dl></dl>-->
+<!--Account: <input id=> account deposit: <input id=>-->
+<!--<dl></dl>-->
+<!--Account: <input id=> account deposit: <input id=>-->
+
+<!--<script>-->
+<!--    // // getBalance-->
+<!--    // let getBalanceButton = document.getElementById("refreshAccount");-->
+<!--    // getBalanceButton.onclick = function () {-->
+<!--    //     let requestObject = {-->
+<!--    //         'accountNumber': accountNumber.value,-->
+<!--    //         'balance': 0-->
+<!--    //     }-->
+<!--    //     fetch("http://localhost:8080/banksql/createAccount=" + accountNumber.value)-->
+<!--    //         .then(response => response.text())-->
+<!--    //         .then(function (response) {-->
+<!--    //             alert(response)-->
+<!--    //         })-->
+<!--    }-->
+<!--</script>-->
 
 </table>
 </body>
