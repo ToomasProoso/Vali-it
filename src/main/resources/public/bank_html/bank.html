@@ -97,7 +97,10 @@ Insert account number: <input id="accountNumber2"> insert amount: <input id="bal
                 if (response.status > 200) {
                     alert("Something is Wrong")
                 } else {
-                   printAccountBalance.innerText = printAccountBalance.value
+                    printAccountBalance.innerText =
+
+                    // printAccountBalance.value="";
+                    // printAccountNumber.value="";
                     alert("OK")
                 }
             })
@@ -200,18 +203,18 @@ From: <input id="accountNumber4"> to: <input id="accountNumber5"> amount: <input
 <!--Account: <input id=> account deposit: <input id=>-->
 
 <!--<script>-->
-<!--    // // getBalance-->
-<!--    // let getBalanceButton = document.getElementById("refreshAccount");-->
-<!--    // getBalanceButton.onclick = function () {-->
-<!--    //     let requestObject = {-->
-<!--    //         'accountNumber': accountNumber.value,-->
-<!--    //         'balance': 0-->
-<!--    //     }-->
-<!--    //     fetch("http://localhost:8080/banksql/createAccount=" + accountNumber.value)-->
-<!--    //         .then(response => response.text())-->
-<!--    //         .then(function (response) {-->
-<!--    //             alert(response)-->
-<!--    //         })-->
+<!--    // getBalance-->
+<!--    let getBalanceButton = document.getElementById("refreshAccount");-->
+<!--    getBalanceButton.onclick = function () {-->
+<!--        let requestObject = {-->
+<!--            'accountNumber': accountNumber.value,-->
+<!--            'balance': 0-->
+<!--        }-->
+<!--        fetch("http://localhost:8080/banksql/createAccount=" + accountNumber.value)-->
+<!--            .then(response => response.text())-->
+<!--            .then(function (response) {-->
+<!--                alert(response)-->
+<!--            })-->
 <!--    }-->
 <!--</script>-->
 

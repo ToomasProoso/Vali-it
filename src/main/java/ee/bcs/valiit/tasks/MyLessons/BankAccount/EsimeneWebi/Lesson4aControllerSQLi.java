@@ -1,6 +1,5 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi;
 
-import com.fasterxml.jackson.databind.introspect.WithMember;
 import ee.bcs.valiit.solution.controller.ObjectRowMapper;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.WithdrawMoneyRequest;
@@ -50,6 +49,12 @@ public class Lesson4aControllerSQLi {
         List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
         return resultList;
     }
+    @CrossOrigin
+    @GetMapping("banksql/getBalance")
+    public double getBalance(@RequestParam("accountNr") String accountNr) {
+        return bankServiseSQL.getBalance(accountNr);
+    }
+
 
     // http://localhost:8080/banksql/deposit/
     @CrossOrigin
@@ -64,13 +69,11 @@ public class Lesson4aControllerSQLi {
     @PutMapping("banksql/withdraw")
     public String withdraw(@RequestBody WithdrawMoneyRequest withdrawReq) {
         return bankServiseSQL.withdraw(withdrawReq);
-
     }
     @CrossOrigin
     @PutMapping("banksql/transfer")
     public String transfer(@RequestBody Account transferReq) {
         return bankServiseSQL.transfer(transferReq);
-
     }
 
     @PutMapping("banksql/account/{accountNumber}/lock")

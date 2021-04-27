@@ -26,6 +26,14 @@ public class BankRepositorySQL {
 
     }
 
+//    public double getBalance(Double accountNr) {
+//        String sql1 = "SELECT balance FROM account WHERE account_number = :account_number";
+//        Map<String, Object> paramMap3 = new HashMap<>();
+//        paramMap3.put("account_number" = accountNr);
+//        return jdbcTemplate.queryForObject(sql1, paramMap3, Double.class);
+//    }
+
+
     public double getAccount(String accountNr) {
         String old = "SELECT balance From account Where account_number = :account_number";
         Map<String, Object> paramMap1 = new HashMap<>();

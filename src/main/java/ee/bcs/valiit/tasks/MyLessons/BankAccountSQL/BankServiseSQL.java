@@ -28,6 +28,12 @@ public class BankServiseSQL {
     public void account(String accountNr, Double balance, Boolean locked, Integer accountId, String ownerName) {
         bankRepositorySQL.getAccount(accountNr, balance, locked, accountId, ownerName);
     }
+    public Double getBalance(String accountNr) {
+        return bankRepositorySQL.getAccount(accountNr);
+
+    }
+//    HibernateAccount account = hibernateRepository.getOne(balance.getAccountNumber());
+//       return balance.getBalance();
 
     public String deposit(Account depositReq) {
         if (depositReq.getBalance() < 0) {
@@ -80,6 +86,9 @@ public class BankServiseSQL {
                 " and account " + transferReq.getAccountNumber1() + " new balance is " + balance1;
 
     }
+
+
+
 
 //        String transferForm = "SELECT balance From account Where account_number = :account_number";
 //       Map<String, Object> paramMap3 = new HashMap<>();
