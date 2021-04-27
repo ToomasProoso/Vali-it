@@ -93,17 +93,21 @@ Insert account number: <input id="accountNumber2"> insert amount: <input id="bal
             body: JSON.stringify(requestObject)
         }
         fetch(url, configuration)
+            .then(response=>response.text())
             .then(function (response) {
-                if (response.status > 200) {
-                    alert("Something is Wrong")
-                } else {
-                    printAccountBalance.innerText =
-
-                    // printAccountBalance.value="";
-                    // printAccountNumber.value="";
-                    alert("OK")
-                }
+                printAccountBalance.innerText = response
             })
+            //     if (response.status > 200) {
+            //         alert("Something is Wrong")
+            //     } else {
+            //         printAccountBalance.innerText = response
+            //         // printAccountBalance.innerText =
+            //
+            //         // printAccountBalance.value="";
+            //         // printAccountNumber.value="";
+            //         alert("OK")
+            //     }
+            // })
 
     }
 </script>
@@ -119,6 +123,7 @@ Insert account number: <input id="accountNumber3"> insert amount: <input id="bal
     let accountNumber3 = document.getElementById("accountNumber3");
     let withdrawAmount = document.getElementById("balance1")
     let withdrawButton = document.getElementById("accountWithdraw");
+    let printAccountWithdraw = document.getElementById("printAccountWithdraw")
     withdrawButton.onclick = function () {
         let requestObject = {
             'accountNumber': accountNumber3.value,
