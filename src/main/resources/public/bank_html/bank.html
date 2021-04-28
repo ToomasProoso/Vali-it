@@ -117,13 +117,13 @@ Insert account number: <input id="accountNumber2"> insert amount: <input id="bal
 Insert account number: <input id="accountNumber3"> insert amount: <input id="balance1">
 
 <p>
-    Account balance is : <span id="printAccountWithdraw"></span>
+    Account balance is : <span id="printAccountBalance1"></span>
 </p>
 <script>
     let accountNumber3 = document.getElementById("accountNumber3");
     let withdrawAmount = document.getElementById("balance1")
     let withdrawButton = document.getElementById("accountWithdraw");
-    let printAccountWithdraw = document.getElementById("printAccountWithdraw")
+    let printAccountBalance1 = document.getElementById("printAccountBalance1")
     withdrawButton.onclick = function () {
         let requestObject = {
             'accountNumber': accountNumber3.value,
@@ -139,18 +139,23 @@ Insert account number: <input id="accountNumber3"> insert amount: <input id="bal
             body: JSON.stringify(requestObject)
         }
         fetch(url, configuration)
+            .then(response=>response.text())
             .then(function (response) {
-                if (response.status > 200) {
-                    response.json().then(
-                        function (response2) {
-                            alert(response2.message);
-                        }
-                    )
-                } else {
-                    alert("OK")
-                }
+                printAccountBalance1.innerText = response
             })
-    }
+        // fetch(url, configuration)
+        //     .then(function (response) {
+        //         if (response.status > 200) {
+        //             response.json().then(
+        //                 function (response2) {
+        //                     alert(response2.message);
+        //                 }
+        //             )
+        //         } else {
+        //             alert("OK")
+        //         }
+        //     })
+     }
 
 
 </script>
@@ -159,13 +164,14 @@ Insert account number: <input id="accountNumber3"> insert amount: <input id="bal
 <button id="accountTransfer">Transfer!</button>
 From: <input id="accountNumber4"> to: <input id="accountNumber5"> amount: <input id="balance2">
 <p>
-    Account balance is : <span id="printAccountTransfer"></span>
+    Account balance is : <span id="printAccountBalance2"></span>
 </p>
 <script>
     let accountNumber4 = document.getElementById("accountNumber4");
     let accountNumber5 = document.getElementById("accountNumber5")
     let transferAmount = document.getElementById("balance2")
     let transferButton = document.getElementById("accountTransfer");
+    let printAccountBalance2 = document.getElementById("printAccountBalance2")
     transferButton.onclick = function () {
         let requestObject = {
             'accountNumber': accountNumber4.value,
@@ -182,17 +188,22 @@ From: <input id="accountNumber4"> to: <input id="accountNumber5"> amount: <input
             body: JSON.stringify(requestObject)
         }
         fetch(url, configuration)
+            .then(response=>response.text())
             .then(function (response) {
-                if (response.status > 200) {
-                    response.json().then(
-                        function (response2) {
-                            alert(response2.message);
-                        }
-                    )
-                } else {
-                    alert("OK")
-                }
+                printAccountBalance2.innerText = response
             })
+        // fetch(url, configuration)
+        //     .then(function (response) {
+        //         if (response.status > 200) {
+        //             response.json().then(
+        //                 function (response2) {
+        //                     alert(response2.message);
+        //                 }
+        //             )
+        //         } else {
+        //             alert("OK")
+        //         }
+        //     })
     }
 </script>
 
