@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2021-04-29 add bank_login" author="Toomas Prooso">
+        <createTable tableName="bank_login">
+            <column name="username" type="text">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="password" type="text"/>
+
+
+        </createTable>
+
+
+    </changeSet>
+
+
+</databaseChangeLog>

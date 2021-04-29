@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@RequestMapping("api")
 @RestController
 public class Lesson4aControllerSQLi {
     private static Map<String, Double> accountBalanceMap = new HashMap<>();
@@ -40,15 +40,24 @@ public class Lesson4aControllerSQLi {
     }
 
 
-    //localhost:8080/banksql/all
+    //localhost:8080/api/banksql/all
     @CrossOrigin
     @GetMapping("banksql/all")
     public List<Account> getAll() {
-        String sql = "SELECT*FROM account";
-        Map<String, Object> accountMap = new HashMap<>();
-        List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
-        return resultList;
+        return bankServiseSQL.getAll();
+//        String sql = "SELECT*FROM account";
+//        Map<String, Object> accountMap = new HashMap<>();
+//        List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
+//        return resultList;
     }
+
+//    @CrossOrigin
+//    @GetMapping("banksql/getHistory")
+//    public List<HistoryList> getHistory() {
+//        return bankServiseSQL.getHistory();
+//    }
+
+
     @CrossOrigin
     @GetMapping("banksql/getBalance")
     public double getBalance(@RequestParam("accountNr") String accountNr) {
@@ -75,6 +84,14 @@ public class Lesson4aControllerSQLi {
     public String transfer(@RequestBody Account transferReq) {
         return bankServiseSQL.transfer(transferReq);
     }
+    @CrossOrigin
+    //http://localhost:8080/banksql/delete
+    @DeleteMapping("banksql/delete")
+    public String delete(@RequestBody Account deleteReq){
+        return bankServiseSQL.delete(deleteReq);
+    }
+
+
 
     @PutMapping("banksql/account/{accountNumber}/lock")
     public String lock(@PathVariable("accountNumber") String accountNr) {

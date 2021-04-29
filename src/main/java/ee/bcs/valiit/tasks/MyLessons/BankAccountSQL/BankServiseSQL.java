@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class BankServiseSQL {
 
@@ -30,7 +32,6 @@ public class BankServiseSQL {
     }
     public Double getBalance(String accountNr) {
         return bankRepositorySQL.getAccount(accountNr);
-
     }
 //    HibernateAccount account = hibernateRepository.getOne(balance.getAccountNumber());
 //       return balance.getBalance();
@@ -87,7 +88,17 @@ public class BankServiseSQL {
 
     }
 
+    public List<Account> getAll() {
+        return bankRepositorySQL.getAll();
+    }
 
+    public String delete(Account deleteReq) {
+        return null;
+    }
+
+//    public List<HistoryList> getHistory() {
+//        return bankRepositorySQL.getHistory;
+//    }
 
 
 //        String transferForm = "SELECT balance From account Where account_number = :account_number";
