@@ -1,33 +1,25 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccount.BankSecurity;
 
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContextException;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 @RequestMapping("api")
 @RestController
 public class BankSQLLoginController {
 
-    @Autowired BankSqlLoginService bankSqlLoginService;
+    @Autowired
+    BankSqlLoginService bankSqlLoginService;
 
-
-    @PutMapping("/api/public/login")
+    @CrossOrigin
+    @PutMapping("/public/login")
     public String login(@RequestBody LoginRequest loginRequest) {
         return bankSqlLoginService.login(loginRequest);
-
-
     }
-//    @PutMapping("")
-//    public String register(@RequestBody RegisterRequest registerRequest){
-//        registerRequest.getUsername().equals()
-//    }
+    @CrossOrigin
+    @PutMapping("/public/register")
+    public void registerUser(@RequestBody LoginRequest loginRequest) {
+        bankSqlLoginService.registerUser(loginRequest);
+    }
 
 
 }

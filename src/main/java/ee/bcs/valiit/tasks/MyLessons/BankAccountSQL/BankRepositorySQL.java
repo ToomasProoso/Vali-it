@@ -1,6 +1,6 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccountSQL;
 
-import ee.bcs.valiit.solution.controller.ObjectRowMapper;
+import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.ObjectRowMapper;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

@@ -1,6 +1,5 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi;
 
-import ee.bcs.valiit.solution.controller.ObjectRowMapper;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.WithdrawMoneyRequest;
 import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.BankServiseSQL;

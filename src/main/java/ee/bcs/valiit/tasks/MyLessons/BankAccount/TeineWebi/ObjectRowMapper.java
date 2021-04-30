@@ -1,4 +1,4 @@
-package ee.bcs.valiit.solution.controller;
+package ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi;
 
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 
