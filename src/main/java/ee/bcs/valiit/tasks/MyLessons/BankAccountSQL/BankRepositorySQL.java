@@ -1,7 +1,9 @@
 package ee.bcs.valiit.tasks.MyLessons.BankAccountSQL;
 
+import ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi.TransactionHistoryRowMapper;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.ObjectRowMapper;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
+import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.transaction.history.TransactionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,20 +31,10 @@ public class BankRepositorySQL {
         jdbcTemplate.update(sql, paramMap);
 
     }
-//    public List<HistoryList> getHistory(){
-//        String sql = "SELECT*FORM historyList";
-//    }
 
-    //    public double getBalance(Double accountNr) {
-//        String sql1 = "SELECT balance FROM account WHERE account_number = :account_number";
-//        Map<String, Object> paramMap3 = new HashMap<>();
-//        paramMap3.put("account_number" = accountNr);
-//        return jdbcTemplate.queryForObject(sql1, paramMap3, Double.class);
-//    }
-    public List<Account> getAll(){
+
+    public List<Account> getAll() {
         String sql = "SELECT*FROM account";
-//        Map<String, Object> accountMap = new HashMap<>();
-//        List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
         return jdbcTemplate.query(sql, new HashMap<>(), new ObjectRowMapper());
     }
 
@@ -64,4 +56,20 @@ public class BankRepositorySQL {
     }
 
 
+    public List<TransactionEntity> findAll() {
+        String sql = "SELECT * FROM transaction_history";
+        Map<String, Object> transactionMap = new HashMap<>();
+        List<TransactionEntity> rs = jdbcTemplate.query(sql, transactionMap, new TransactionHistoryRowMapper());
+        return rs;
+    }
 }
+
+//    public List<HistoryList> getHistory(){
+//        String sql = "SELECT*FORM historyList";
+//    }
+
+//    public double getBalance(Double accountNr) {
+//        String sql1 = "SELECT balance FROM account WHERE account_number = :account_number";
+//        Map<String, Object> paramMap3 = new HashMap<>();
+//        paramMap3.put("account_number" = accountNr);
+//        return jdbcTemplate.queryForObject(sql1, paramMap3, Double.class);

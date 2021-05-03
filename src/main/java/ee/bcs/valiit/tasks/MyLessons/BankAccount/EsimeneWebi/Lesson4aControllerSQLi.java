@@ -2,7 +2,8 @@ package ee.bcs.valiit.tasks.MyLessons.BankAccount.EsimeneWebi;
 
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.WithdrawMoneyRequest;
-import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.BankServiseSQL;
+import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.BankServiceSQL;
+import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.transaction.history.TransactionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class Lesson4aControllerSQLi {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
-    private BankServiseSQL bankServiseSQL;
+    private BankServiceSQL bankServiseSQL;
 
 
     public static void main(String[] args) {
@@ -44,17 +45,31 @@ public class Lesson4aControllerSQLi {
     @GetMapping("banksql/all")
     public List<Account> getAll() {
         return bankServiseSQL.getAll();
-//        String sql = "SELECT*FROM account";
-//        Map<String, Object> accountMap = new HashMap<>();
-//        List<Account> resultList = jdbcTemplate.query(sql, accountMap, new ObjectRowMapper());
-//        return resultList;
+
+    }
+    // All history
+    //localhost:8080/banksql/history
+    @CrossOrigin
+    @GetMapping("banksql/allHistory")
+    public List<TransactionEntity> getAllHistory() {
+        return bankServiseSQL.getAllHistory();
+    }
+    
+
+    //Transaction history for one account
+    //http://localhost:8080/banksql/historyCheck
+    @CrossOrigin
+    @GetMapping("banksql/oneHistory")
+    public TransactionEntity oneHistory(@PathVariable("fromAccount")String fromAccount){
+        return bankServiseSQL.getOneHistory(fromAccount);
+    }
+    //transaction search
+    @CrossOrigin
+    @GetMapping("banksql/searchHistory")
+    public List <TransactionEntity> searchHistory(@PathVariable("fromAccount")String fromAccount){
+        return bankServiseSQL.getSearchHistory(fromAccount);
     }
 
-//    @CrossOrigin
-//    @GetMapping("banksql/getHistory")
-//    public List<HistoryList> getHistory() {
-//        return bankServiseSQL.getHistory();
-//    }
 
 
     @CrossOrigin
@@ -62,7 +77,6 @@ public class Lesson4aControllerSQLi {
     public double getBalance(@RequestParam("accountNr") String accountNr) {
         return bankServiseSQL.getBalance(accountNr);
     }
-
 
     // http://localhost:8080/banksql/deposit/
     @CrossOrigin

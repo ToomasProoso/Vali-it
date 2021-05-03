@@ -16,11 +16,14 @@
         </createTable>
 
         <createTable tableName="transaction_history">
-            <column name="account_number" type="text"/>
-            <column name="deposit" type="numeric"/>
-            <column name="withdraw" type="numeric"/>
+            <column name="transfer_id" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="from_account" type="text"/>
+            <column name="to_account" type="text"/>
+            <column name="transfer" type="numeric"/>
+            <column name="deduction" type="numeric"/>
             <column name="time" type="timestamp"/>
-            <column name="balance" type="numeric"/>
 
         </createTable>
 

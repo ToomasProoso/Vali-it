@@ -6,15 +6,18 @@ import ee.bcs.valiit.solution.hibernate.HibernateAccountRepository;
 import ee.bcs.valiit.solution.hibernate.HibernateAccount;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.Account;
 import ee.bcs.valiit.tasks.MyLessons.BankAccount.TeineWebi.WithdrawMoneyRequest;
+import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.transaction.history.TransactionEntity;
+import ee.bcs.valiit.tasks.MyLessons.BankAccountSQL.transaction.history.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class BankServiseSQL {
+public class BankServiceSQL {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -25,27 +28,34 @@ public class BankServiseSQL {
     @Autowired
     private HibernateAccountRepository hibernateRepository;
 
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+
 
 
     public void account(String accountNr, Double balance, Boolean locked, Integer accountId, String ownerName) {
         bankRepositorySQL.getAccount(accountNr, balance, locked, accountId, ownerName);
     }
+
     public Double getBalance(String accountNr) {
         return bankRepositorySQL.getAccount(accountNr);
     }
-//    HibernateAccount account = hibernateRepository.getOne(balance.getAccountNumber());
-//       return balance.getBalance();
+
 
     public String deposit(Account depositReq) {
         if (depositReq.getBalance() < 0) {
             throw new SampleApplicationException("The amount cannot be negative");
         }
         HibernateAccount account = hibernateRepository.getOne(depositReq.getAccountNumber());
-//        Double oldBalance = bankRepositorySQL.getAccount(depositReq.getAccountNumber());
         Double newBalance = depositReq.getBalance() + (double) account.getBalance();
         account.setBalance(newBalance);
         hibernateRepository.save(account);
-//        bankRepositorySQL.updateBalance(depositReq.getAccountNumber(), newBalance);
+        TransactionEntity entity = new TransactionEntity();
+        entity.setDateTime(LocalDateTime.now());
+        entity.setDeduction(depositReq.getBalance());
+        entity.setFromAccount(depositReq.getAccountNumber());
+        transactionRepository.save(entity);
         return "Added " + depositReq.getBalance() + " to " + depositReq.getAccountNumber() + " new balance is " + newBalance;
 
     }
@@ -55,11 +65,10 @@ public class BankServiseSQL {
         if (withdrawReq.getBalance() > account.getBalance()) {
             throw new SampleApplicationException("You can't withdraw that much.");
         }
-//        Double oldBalance = bankRepositorySQL.getAccount(withdrawReq.getAccountNumber());
+
         Double newBalance = (double) account.getBalance() - withdrawReq.getBalance();
         account.setBalance(newBalance);
         hibernateRepository.save(account);
-//        bankRepositorySQL.updateBalance(withdrawReq.getAccountNumber(), newBalance);
         return "withdraw " + withdrawReq.getBalance() + withdrawReq.getAccountNumber() + " new balace in = " + newBalance;
 
     }
@@ -69,20 +78,14 @@ public class BankServiseSQL {
 
     public String transfer(Account transferReq) {
         HibernateAccount account = hibernateRepository.getOne(transferReq.getAccountNumber());
-//        Double balance = bankRepositorySQL.getAccount(transferReq.getAccountNumber());
         Double balance = (double)account.getBalance() - transferReq.getBalance();
         account.setBalance(balance);
         if (balance < 0) {
             throw new SampleApplicationException("You can't transfer that much.");
         }
-//        hibernateRepository.save(account);
-//        bankRepositorySQL.updateBalance(transferReq.getAccountNumber(), balance);
         HibernateAccount account1 = hibernateRepository.getOne(transferReq.getAccountNumber1());
-//        Double balance1 = bankRepositorySQL.getAccount(transferReq.getAccountNumber1());
         Double balance1 = (double) account1.getBalance() + transferReq.getBalance();
         account1.setBalance(balance1);
-//        hibernateRepository.save(account1);
-//        bankRepositorySQL.updateBalance(transferReq.getAccountNumber1(), balance1);
         return "You transfer form account " + transferReq.getAccountNumber() + " new balance is: "+ balance +
                 " and account " + transferReq.getAccountNumber1() + " new balance is " + balance1;
 
@@ -96,9 +99,17 @@ public class BankServiseSQL {
         return null;
     }
 
-//    public List<HistoryList> getHistory() {
-//        return bankRepositorySQL.getHistory;
-//    }
+    public List<TransactionEntity> getAllHistory() {
+        return bankRepositorySQL.findAll();
+    }
+
+    public TransactionEntity getOneHistory(String fromAccount) {
+        return transactionRepository.getByFromAccount(fromAccount);
+    }
+
+    public List<TransactionEntity> getSearchHistory(String fromAccount) {
+        return transactionRepository.findAllByFromAccountContaining(fromAccount);
+    }
 
 
 //        String transferForm = "SELECT balance From account Where account_number = :account_number";
